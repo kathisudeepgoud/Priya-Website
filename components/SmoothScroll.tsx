@@ -11,26 +11,31 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    // Disable Lenis on touch devices so native mobile momentum scrolling works perfectly
+    const isTouch =
+      typeof window !== "undefined" &&
+      (window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window);
+
+    if (isTouch) return;
 
     const lenis = new Lenis({
-      duration: isTouch ? 0.9 : 1.2,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: isTouch ? 1.3 : 1
+      smoothWheel: true
     });
     lenisRef.current = lenis;
 
     // Sync Lenis with GSAP's ticker so ScrollTrigger stays in lockstep.
     lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((time) => {
+    const tickHandler = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
+    gsap.ticker.add(tickHandler);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
       lenis.destroy();
-      gsap.ticker.remove(() => {});
+      gsap.ticker.remove(tickHandler);
     };
   }, []);
 

@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-charcoal text-cream font-body antialiased overflow-x-hidden max-w-full w-full relative">
         <SmoothScroll>
           <CustomCursor />
-          <div className="w-full max-w-full overflow-x-hidden relative">
+          <div className="w-full relative">
             {children}
           </div>
         </SmoothScroll>

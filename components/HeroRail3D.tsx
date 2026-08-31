@@ -58,8 +58,9 @@ export default function HeroRail3D({
     setHoveredCardIndex(null);
   }, [setIsHovered]);
 
-  // Drag / Touch gesture handlers
+  // Drag gesture handlers (Mouse drag only on desktop; touch gestures pass through for native vertical scroll)
   const handlePointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === "touch") return;
     setIsDragging(true);
     dragStartX.current = e.clientX;
     dragStartTime.current = Date.now();
@@ -70,7 +71,7 @@ export default function HeroRail3D({
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging) return;
+    if (!isDragging || e.pointerType === "touch") return;
     const deltaX = e.clientX - dragStartX.current;
     setDragOffset(deltaX);
   };
@@ -137,7 +138,7 @@ export default function HeroRail3D({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      className="relative flex h-full w-full max-w-full select-none items-center justify-center lg:justify-start cursor-grab touch-pan-y overflow-hidden"
+      className="relative flex h-full w-full max-w-full select-none items-center justify-center lg:justify-start cursor-grab touch-auto overflow-hidden"
       style={{ perspective: "1400px" }}
       aria-label="3D Hero Carousel"
       role="region"
