@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Anton, Oswald, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -19,15 +19,25 @@ export const metadata: Metadata = {
   }
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${anton.variable} ${oswald.variable} ${inter.variable}`}>
-      <body className="bg-charcoal text-cream font-body antialiased">
+    <html lang="en" className={`${anton.variable} ${oswald.variable} ${inter.variable} overflow-x-hidden max-w-full`}>
+      <body className="bg-charcoal text-cream font-body antialiased overflow-x-hidden max-w-full w-full relative">
         <SmoothScroll>
           <CustomCursor />
-          {children}
+          <div className="w-full max-w-full overflow-x-hidden relative">
+            {children}
+          </div>
         </SmoothScroll>
       </body>
     </html>
   );
 }
+

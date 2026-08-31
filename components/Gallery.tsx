@@ -58,7 +58,7 @@ export default function Gallery() {
   }, []);
 
   return (
-    <section id="gallery" className="theme-bg-main py-32">
+    <section id="gallery" className="theme-bg-main py-32 overflow-hidden max-w-full">
       <div className="mx-auto max-w-[1280px] px-[6vw]">
         <div className="mb-14">
           <span className="eyebrow mb-3 block">A Closer Look</span>

@@ -290,7 +290,7 @@ export default function Hero() {
         </div>
 
         {/* RIGHT COLUMN: 3D HORIZONTAL CAROUSEL RAIL */}
-        <div className="hero-rail-col relative flex h-[440px] md:h-[480px] w-full items-center justify-start lg:col-span-7 xl:col-span-7 pl-6">
+        <div className="hero-rail-col relative flex h-[440px] md:h-[480px] w-full max-w-full overflow-hidden items-center justify-start lg:col-span-7 xl:col-span-7 pl-6">
           <HeroRail3D
             items={HERO_ITEMS}
             activeIndex={activeIndex}
@@ -304,7 +304,7 @@ export default function Hero() {
       {/* ========================================================================= */}
       {/* MOBILE LAYOUT (< lg): CUSTOM ORDERED MOBILE SEQUENCE */}
       {/* ========================================================================= */}
-      <div className="relative z-10 flex lg:hidden flex-col items-center gap-5 my-auto w-full">
+      <div className="relative z-10 flex lg:hidden flex-col items-center gap-5 my-auto w-full max-w-full overflow-hidden">
         
         {/* MOBILE ORDER 1: BRAND TITLE & LARGE 3-LINE LOGO */}
         <div className="hero-left-col w-full max-w-xl">
@@ -374,7 +374,7 @@ export default function Hero() {
         </div>
 
         {/* MOBILE ORDER 3: HERO ITEMS 3D CAROUSEL RAIL */}
-        <div className="hero-rail-col relative flex h-[340px] sm:h-[380px] w-full items-center justify-center">
+        <div className="hero-rail-col relative flex h-[340px] sm:h-[380px] w-full max-w-full overflow-hidden items-center justify-center">
           <HeroRail3D
             items={HERO_ITEMS}
             activeIndex={activeIndex}

@@ -61,7 +61,7 @@ export default function Categories() {
   }, []);
 
   return (
-    <section className="theme-bg-alt py-20">
+    <section className="theme-bg-alt py-20 overflow-hidden max-w-full">
       <div ref={gridRef} className="grid grid-cols-1 px-[18px] sm:grid-cols-2" style={{ gap: 18 }}>
         {CATEGORIES.map((c) => (
           <a

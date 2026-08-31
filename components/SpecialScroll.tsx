@@ -5,7 +5,7 @@ import MenuGrid from "@/components/MenuGrid";
 
 export default function SpecialScroll() {
   return (
-    <section id="special-icecreams" className="theme-bg-accent py-24 sm:py-32">
+    <section id="special-icecreams" className="theme-bg-accent py-24 sm:py-32 overflow-hidden max-w-full">
       <div className="mx-auto max-w-[1280px] px-[6vw]">
         <div className="mb-12">
           <span className="eyebrow mb-3 block">Priya Signatures</span>

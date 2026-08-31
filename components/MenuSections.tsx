@@ -66,7 +66,7 @@ function SubHead({ children, first = false }: { children: React.ReactNode; first
 
 export function IceCreamsSection() {
   return (
-    <section id="icecreams" className="theme-bg-main py-32">
+    <section id="icecreams" className="theme-bg-main py-32 overflow-hidden max-w-full">
       <div className="mx-auto max-w-[1280px] px-[6vw]">
         <SectionHead eyebrow="The Classics" title="Ice Creams" />
         <SubHead first>Ice Creams</SubHead>
@@ -78,7 +78,7 @@ export function IceCreamsSection() {
 
 export function FastFoodSection() {
   return (
-    <section id="fastfood" className="theme-bg-alt py-32">
+    <section id="fastfood" className="theme-bg-alt py-32 overflow-hidden max-w-full">
       <div className="mx-auto max-w-[1280px] px-[6vw]">
         <SectionHead eyebrow="North Indian Dishes" title="Fast Food" />
         <SubHead first>Manchurian</SubHead>
@@ -92,7 +92,7 @@ export function FastFoodSection() {
 
 export function MilkshakesSection() {
   return (
-    <section id="milkshakes" className="theme-bg-main py-32">
+    <section id="milkshakes" className="theme-bg-main py-32 overflow-hidden max-w-full">
       <div className="mx-auto max-w-[1280px] px-[6vw]">
         <SectionHead eyebrow="Thick & Cold" title="Milkshakes" />
         <SubHead first>Milkshakes</SubHead>
@@ -106,7 +106,7 @@ export function MilkshakesSection() {
 
 export function ParcelSection() {
   return (
-    <section id="parcel" className="theme-bg-alt py-32">
+    <section id="parcel" className="theme-bg-alt py-32 overflow-hidden max-w-full">
       <div className="mx-auto max-w-[1280px] px-[6vw]">
         <SectionHead eyebrow="Take It Home" title="Ice Cream Parcels" />
         <SubHead first>Ice Cream Parcel</SubHead>

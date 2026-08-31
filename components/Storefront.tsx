@@ -51,7 +51,7 @@ export default function Storefront() {
   }, []);
 
   return (
-    <section id="storefront" className="theme-bg-alt py-32">
+    <section id="storefront" className="theme-bg-alt py-32 overflow-hidden max-w-full">
       <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-[6vw] md:grid-cols-2">
         <div ref={imgRef} className="relative overflow-hidden rounded-[28px] shadow-[0_40px_80px_rgba(0,0,0,0.5)]">
           <Image

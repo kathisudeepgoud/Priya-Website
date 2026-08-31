@@ -122,7 +122,7 @@ export default function HeroRail3D({
   const isLaptop = screenWidth >= 1024;
 
   // Horizontal step gap between Main, Medium, and Small cards
-  const stepX = isMobile ? 135 : isTablet ? 180 : 210;
+  const stepX = isMobile ? 85 : isTablet ? 150 : 210;
 
   // Extra left offset margin: 0 for centered mobile/tablet, 35 for laptop
   const leftStartGap = isLaptop ? 35 : 0;
@@ -137,7 +137,7 @@ export default function HeroRail3D({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      className="relative flex h-full w-full select-none items-center justify-center lg:justify-start cursor-grab touch-pan-y overflow-visible"
+      className="relative flex h-full w-full max-w-full select-none items-center justify-center lg:justify-start cursor-grab touch-pan-y overflow-hidden"
       style={{ perspective: "1400px" }}
       aria-label="3D Hero Carousel"
       role="region"

@@ -61,7 +61,7 @@ export default function Location() {
   }, []);
 
   return (
-    <section id="location" ref={sectionRef} className="theme-bg-alt py-32 overflow-hidden">
+    <section id="location" ref={sectionRef} className="theme-bg-alt py-32 overflow-hidden max-w-full">
       <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-[6vw] md:grid-cols-2">
         <div ref={textRef}>
           <span className="eyebrow mb-3 block">Find Priya</span>

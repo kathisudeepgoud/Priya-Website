@@ -81,7 +81,7 @@ export default function ColorPaletteSwitcher() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[600]">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[600]">
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -97,7 +97,7 @@ export default function ColorPaletteSwitcher() {
 
       {/* Expanded Palette Drawer / Panel */}
       {isOpen && (
-        <div className="absolute bottom-16 right-0 w-[320px] sm:w-[380px] rounded-3xl border border-gold/40 bg-charcoal/95 p-5 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div className="absolute bottom-16 right-0 w-[calc(100vw-2rem)] max-w-[380px] sm:w-[380px] rounded-3xl border border-gold/40 bg-charcoal/95 p-5 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] animate-in fade-in slide-in-from-bottom-4 duration-300">
           <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-champagne" />

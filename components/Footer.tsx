@@ -48,7 +48,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer ref={footerRef} className="theme-bg-main py-24 text-center overflow-hidden">
+    <footer ref={footerRef} className="theme-bg-main py-24 text-center overflow-hidden max-w-full">
       <div className="footer-head">
         <div className="font-display text-[clamp(3rem,12vw,8rem)] uppercase leading-[0.85]">PRIYA</div>
         <div className="mt-2 font-label text-xs uppercase tracking-[0.3em] text-champagne">
