@@ -10,13 +10,14 @@ export default function Story() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 75%",
+          start: "top 85%",
           end: "bottom 15%",
-          toggleActions: "play reverse play reverse"
+          toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
         }
       });
 

@@ -58,7 +58,72 @@ export default function HeroRail3D({
     setHoveredCardIndex(null);
   }, [setIsHovered]);
 
-  // Drag gesture handlers (Mouse drag only on desktop; touch gestures pass through for native vertical scroll)
+  // Directional Touch Gesture Detection for Mobile (1-finger vertical scroll passes through, 1-finger horizontal swipe rotates carousel)
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const isHorizontalSwipe = useRef<boolean | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length !== 1) return;
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    dragStartX.current = e.touches[0].clientX;
+    dragStartTime.current = Date.now();
+    isHorizontalSwipe.current = null;
+    setIsDragging(false);
+    setDragOffset(0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+
+    const deltaX = Math.abs(currentX - touchStartX.current);
+    const deltaY = Math.abs(currentY - touchStartY.current);
+
+    if (isHorizontalSwipe.current === null) {
+      if (deltaX > 6 || deltaY > 6) {
+        if (deltaX > deltaY) {
+          isHorizontalSwipe.current = true;
+          setIsDragging(true);
+        } else {
+          isHorizontalSwipe.current = false;
+          setIsDragging(false);
+        }
+      }
+    }
+
+    if (isHorizontalSwipe.current === true) {
+      const moveX = currentX - dragStartX.current;
+      setDragOffset(moveX);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (isHorizontalSwipe.current === true) {
+      const touchEndX = e.changedTouches[0]?.clientX || dragStartX.current;
+      const deltaX = touchEndX - dragStartX.current;
+      const deltaTime = Date.now() - dragStartTime.current;
+      const velocity = Math.abs(deltaX) / (deltaTime || 1);
+
+      const N = items.length;
+      if (deltaX < -35 || (deltaX < -15 && velocity > 0.3)) {
+        onItemSelect((activeIndex + 1) % N);
+      } else if (deltaX > 35 || (deltaX > 15 && velocity > 0.3)) {
+        onItemSelect((activeIndex - 1 + N) % N);
+      }
+    }
+
+    touchStartX.current = null;
+    touchStartY.current = null;
+    isHorizontalSwipe.current = null;
+    setIsDragging(false);
+    setDragOffset(0);
+  };
+
+  // Mouse Drag Handlers for Desktop / Laptop
   const handlePointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "touch") return;
     setIsDragging(true);
@@ -77,7 +142,7 @@ export default function HeroRail3D({
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
-    if (!isDragging) return;
+    if (!isDragging || e.pointerType === "touch") return;
     setIsDragging(false);
     if (containerRef.current) {
       containerRef.current.style.cursor = "grab";
@@ -88,7 +153,6 @@ export default function HeroRail3D({
     const velocity = Math.abs(deltaX) / (deltaTime || 1);
 
     const N = items.length;
-    // Swipe left -> Next item, Swipe right -> Prev item
     if (deltaX < -40 || (deltaX < -15 && velocity > 0.4)) {
       onItemSelect((activeIndex + 1) % N);
     } else if (deltaX > 40 || (deltaX > 15 && velocity > 0.4)) {
@@ -134,11 +198,15 @@ export default function HeroRail3D({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeaveContainer}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      className="relative flex h-full w-full max-w-full select-none items-center justify-center lg:justify-start cursor-grab touch-auto overflow-hidden"
+      className="relative flex h-full w-full max-w-full select-none items-center justify-center lg:justify-start cursor-grab touch-pan-y overflow-hidden"
       style={{ perspective: "1400px" }}
       aria-label="3D Hero Carousel"
       role="region"

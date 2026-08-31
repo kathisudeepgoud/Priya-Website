@@ -21,13 +21,14 @@ export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: footerRef.current,
           start: "top 90%",
           end: "bottom top",
-          toggleActions: "play reverse play reverse"
+          toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
         }
       });
 

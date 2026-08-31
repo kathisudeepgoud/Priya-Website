@@ -21,24 +21,20 @@ export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [displayedItem, setDisplayedItem] = useState<HeroItem>(HERO_ITEMS[0]);
   const [isHovered, setIsHovered] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   const prevActiveIndex = useRef(activeIndex);
 
   // Manual navigation helper
   const goToNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % HERO_ITEMS.length);
-    setProgress(0);
   }, []);
 
   const goToPrev = useCallback(() => {
     setActiveIndex((prev) => (prev - 1 + HERO_ITEMS.length) % HERO_ITEMS.length);
-    setProgress(0);
   }, []);
 
   const selectIndex = useCallback((idx: number) => {
     setActiveIndex(idx);
-    setProgress(0);
   }, []);
 
   // Autoplay loop timer (EXACTLY 3 SECONDS continuous auto-scroll)
@@ -52,17 +48,10 @@ export default function Hero() {
     const timer = setInterval(() => {
       if (document.visibilityState !== "visible") return;
       setActiveIndex((curr) => (curr + 1) % HERO_ITEMS.length);
-      setProgress(0);
     }, 3000);
-
-    const progressTimer = setInterval(() => {
-      if (document.visibilityState !== "visible") return;
-      setProgress((prev) => (prev >= 100 ? 0 : prev + 1.0));
-    }, 30);
 
     return () => {
       clearInterval(timer);
-      clearInterval(progressTimer);
     };
   }, []);
 
@@ -112,15 +101,16 @@ export default function Hero() {
 
   // GSAP Entrance & ScrollTrigger Scroll-out animation into existing #story section
   useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
-      // Entrance timeline with bidirectional toggleActions
+      // Entrance timeline with responsive toggleActions
       const letters = titleRef.current?.querySelectorAll(".title-char");
       const entranceTl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top 80%",
           end: "bottom 10%",
-          toggleActions: "play reverse play reverse"
+          toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
         }
       });
 
@@ -411,12 +401,12 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* AUTOPLAY PROGRESS INDICATOR (5 SECONDS) */}
+        {/* AUTOPLAY PROGRESS INDICATOR (3 SECONDS) */}
         <div className="mx-4 sm:mx-6 flex-1 max-w-md">
           <div className="relative h-1 w-full overflow-hidden rounded-full bg-white/10">
             <div
-              className="absolute left-0 top-0 h-full bg-gradient-to-r from-wine via-champagne to-gold transition-all duration-75 ease-linear rounded-full"
-              style={{ width: `${progress}%` }}
+              key={activeIndex}
+              className="absolute left-0 top-0 h-full bg-gradient-to-r from-wine via-champagne to-gold animate-[heroProgress_3s_linear] rounded-full"
             />
           </div>
         </div>

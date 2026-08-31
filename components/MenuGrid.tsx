@@ -13,6 +13,7 @@ export default function MenuGrid({ items }: { items: MenuItem[] }) {
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       if (!listRef.current) return;
       gsap.fromTo(
@@ -28,7 +29,7 @@ export default function MenuGrid({ items }: { items: MenuItem[] }) {
             trigger: listRef.current,
             start: "top 88%",
             end: "bottom 10%",
-            toggleActions: "play reverse play reverse"
+            toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
           }
         }
       );

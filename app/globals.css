@@ -135,9 +135,19 @@ body {
   max-width: 100vw;
   width: 100%;
   position: relative;
+  touch-action: manipulation;
   background-color: var(--bg-main);
   color: var(--text-main);
   transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+@keyframes heroProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .eyebrow {

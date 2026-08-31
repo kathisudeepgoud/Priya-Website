@@ -13,6 +13,7 @@ export default function Loader() {
     const tl = gsap.timeline({
       onComplete: () => {
         document.body.style.overflow = "";
+        document.body.style.overflowY = "auto";
         setDone(true);
       }
     });
@@ -21,6 +22,11 @@ export default function Loader() {
       { yPercent: -100, duration: 0.8, ease: "power4.inOut" },
       "+=0.15"
     );
+
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.overflowY = "auto";
+    };
   }, []);
 
   if (done) return null;
@@ -28,7 +34,7 @@ export default function Loader() {
   return (
     <div
       ref={rootRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-3 bg-wine-deep"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-3 bg-wine-deep pointer-events-none"
     >
       <p className="font-label text-xs uppercase tracking-[0.35em] text-champagne">
         Priya · Ice Creams &amp; Fast Foods

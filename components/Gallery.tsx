@@ -35,6 +35,7 @@ export default function Gallery() {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".gal-item",
@@ -47,9 +48,9 @@ export default function Gallery() {
           ease: "power3.out",
           scrollTrigger: {
             trigger: gridRef.current,
-            start: "top 78%",
+            start: "top 85%",
             end: "bottom 15%",
-            toggleActions: "play reverse play reverse"
+            toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
           }
         }
       );

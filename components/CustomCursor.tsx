@@ -6,10 +6,17 @@ export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const [label, setLabel] = useState("");
   const [expanded, setExpanded] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    const isTouch = window.matchMedia("(pointer: coarse)").matches;
-    if (isTouch) return;
+    const isTouch =
+      typeof window !== "undefined" &&
+      (window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window);
+
+    if (isTouch) {
+      setIsTouchDevice(true);
+      return;
+    }
 
     const move = (e: MouseEvent) => {
       if (dotRef.current) {
@@ -43,6 +50,8 @@ export default function CustomCursor() {
       document.removeEventListener("mouseout", onLeave);
     };
   }, []);
+
+  if (isTouchDevice) return null;
 
   return (
     <div

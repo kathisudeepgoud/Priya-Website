@@ -16,6 +16,7 @@ export default function Location() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       if (textRef.current) {
         gsap.fromTo(
@@ -28,9 +29,9 @@ export default function Location() {
             ease: "power3.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 80%",
+              start: "top 85%",
               end: "bottom 15%",
-              toggleActions: "play reverse play reverse"
+              toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
             }
           }
         );
@@ -48,9 +49,9 @@ export default function Location() {
             ease: "power3.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 80%",
+              start: "top 85%",
               end: "bottom 15%",
-              toggleActions: "play reverse play reverse"
+              toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
             }
           }
         );
