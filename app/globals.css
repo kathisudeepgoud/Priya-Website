@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   DYNAMIC BACKGROUND & FONT COLOR PALETTES (CURATED LIGHT & DARK THEMES)
+   ========================================================================== */
+
+/* 1. Midnight Luxury (Original Classic Dark Theme — Default) */
+:root,
+[data-theme="dark"] {
+  --bg-hero-grad: radial-gradient(ellipse at 50% 25%, #5E1428 0%, #1A1315 50%, #0B0908 100%);
+  --bg-main: #0B0908;
+  --bg-section-alt: #1B1512;
+  --bg-accent-section: #161210;
+  --bg-card-surface: #1B1512;
+  --color-wine: #7A1B34;
+  --text-main: #EFE6D2;
+  --text-sub: #B7AFA0;
+  --text-accent: #E5B95C;
+  --border-color: rgba(229, 185, 92, 0.3);
+  --border-light: rgba(255, 255, 255, 0.1);
+  --header-bg: rgba(20, 13, 16, 0.88);
+}
+
+/* 2. Vanilla Cream (Original Classic Light Theme) */
+[data-theme="vanilla"] {
+  --bg-hero-grad: radial-gradient(ellipse at 50% 25%, #FAF4E8 0%, #F3E8D4 50%, #EBDCC4 100%);
+  --bg-main: #FAF4E8;
+  --bg-section-alt: #F3E8D4;
+  --bg-accent-section: #EBDCC4;
+  --bg-card-surface: #FFFFFF;
+  --color-wine: #6E162C;
+  --text-main: #241815;
+  --text-sub: #52443C;
+  --text-accent: #8C5E14;
+  --border-color: rgba(140, 94, 20, 0.2);
+  --border-light: rgba(36, 24, 21, 0.12);
+  --header-bg: rgba(250, 244, 232, 0.94);
+}
+
+/* 3. Priya Heritage */
+[data-theme="heritage"] {
+  --bg-hero-grad: radial-gradient(ellipse at 50% 25%, #FFF8EE 0%, #F8EFE0 50%, #EEDFCA 100%);
+  --bg-main: #FFF8EE;
+  --bg-section-alt: #F8EFE0;
+  --bg-accent-section: #EEDFCA;
+  --bg-card-surface: #FFFFFF;
+  --color-wine: #8E1B2B;
+  --text-main: #292525;
+  --text-sub: #766C68;
+  --text-accent: #D9A441;
+  --border-color: #E9DCCB;
+  --border-light: rgba(41, 37, 37, 0.12);
+  --header-bg: rgba(255, 248, 238, 0.94);
+}
+
+/* 4. Cherry Cream */
+[data-theme="cherry"] {
+  --bg-hero-grad: radial-gradient(ellipse at 50% 25%, #FFF7F5 0%, #FBEBE8 50%, #F4D9DD 100%);
+  --bg-main: #FFF7F5;
+  --bg-section-alt: #FBEBE8;
+  --bg-accent-section: #F4D9DD;
+  --bg-card-surface: #FFFFFF;
+  --color-wine: #A51D3A;
+  --text-main: #292225;
+  --text-sub: #806D70;
+  --text-accent: #E8A0A8;
+  --border-color: #F0D9DC;
+  --border-light: rgba(41, 34, 37, 0.12);
+  --header-bg: rgba(255, 247, 245, 0.94);
+}
+
+/* 5. Vanilla Gold */
+[data-theme="gold"] {
+  --bg-hero-grad: radial-gradient(ellipse at 50% 25%, #FFFBF2 0%, #F9F0DA 50%, #EEE1C5 100%);
+  --bg-main: #FFFBF2;
+  --bg-section-alt: #F9F0DA;
+  --bg-accent-section: #EEE1C5;
+  --bg-card-surface: #FFFFFF;
+  --color-wine: #B47A20;
+  --text-main: #2C2824;
+  --text-sub: #7C746A;
+  --text-accent: #E8C875;
+  --border-color: #EEE1C5;
+  --border-light: rgba(44, 40, 36, 0.12);
+  --header-bg: rgba(255, 251, 242, 0.94);
+}
+
+/* 6. Sage Cream */
+[data-theme="sage"] {
+  --bg-hero-grad: radial-gradient(ellipse at 50% 25%, #F7F7EF 0%, #EDEDDF 50%, #DEE1D5 100%);
+  --bg-main: #F7F7EF;
+  --bg-section-alt: #EDEDDF;
+  --bg-accent-section: #DEE1D5;
+  --bg-card-surface: #FFFFFF;
+  --color-wine: #7B8B68;
+  --text-main: #252724;
+  --text-sub: #70756B;
+  --text-accent: #D6B56A;
+  --border-color: #DEE1D5;
+  --border-light: rgba(37, 39, 36, 0.12);
+  --header-bg: rgba(247, 247, 239, 0.94);
+}
+
+/* 7. Sky & Burgundy */
+[data-theme="sky"] {
+  --bg-hero-grad: radial-gradient(ellipse at 50% 25%, #F4F8FA 0%, #E7EFF3 50%, #DCE5EA 100%);
+  --bg-main: #F4F8FA;
+  --bg-section-alt: #E7EFF3;
+  --bg-accent-section: #DCE5EA;
+  --bg-card-surface: #FFFFFF;
+  --color-wine: #92253A;
+  --text-main: #20242A;
+  --text-sub: #6D747C;
+  --text-accent: #DFAF4A;
+  --border-color: #DCE5EA;
+  --border-light: rgba(32, 36, 42, 0.12);
+  --header-bg: rgba(244, 248, 250, 0.94);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  overscroll-behavior: none;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.eyebrow {
+  font-family: var(--font-oswald);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.7rem;
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+.reveal-year {
+  -webkit-text-stroke: 1.5px var(--text-accent);
+  color: transparent;
+}
+
+/* Theme background and font utility classes */
+.theme-hero-bg {
+  background: var(--bg-hero-grad);
+  color: var(--text-main);
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+.theme-bg-main {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.theme-bg-alt {
+  background-color: var(--bg-section-alt);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.theme-bg-accent {
+  background-color: var(--bg-accent-section);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.theme-bg-card {
+  background-color: var(--bg-card-surface);
+  border-color: var(--border-color);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+}
+
+.theme-text-main {
+  color: var(--text-main);
+}
+
+.theme-text-sub {
+  color: var(--text-sub);
+}
+
+.theme-text-accent {
+  color: var(--text-accent);
+}
+
+@media (max-width: 900px) {
+  .cursor-dot {
+    display: none !important;
+  }
+}
