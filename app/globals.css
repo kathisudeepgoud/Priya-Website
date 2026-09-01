@@ -6,6 +6,12 @@
    DYNAMIC BACKGROUND & FONT COLOR PALETTES (CURATED LIGHT & DARK THEMES)
    ========================================================================== */
 
+:root {
+  --font-anton: "Anton", "Impact", "Arial Black", sans-serif;
+  --font-oswald: "Oswald", "Arial Narrow", sans-serif;
+  --font-inter: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 /* 1. Midnight Luxury (Original Classic Dark Theme — Default) */
 :root,
 [data-theme="dark"] {
@@ -125,13 +131,13 @@
 
 html {
   scroll-behavior: auto;
-  overflow-x: hidden !important;
+  overflow-x: clip;
   max-width: 100vw;
   width: 100%;
 }
 
 body {
-  overflow-x: hidden !important;
+  overflow-x: clip;
   max-width: 100vw;
   width: 100%;
   position: relative;
@@ -212,4 +218,67 @@ body {
   .cursor-dot {
     display: none !important;
   }
+}
+
+/* GPU acceleration & mobile smooth touch scroll utilities */
+.gpu-layer {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes marqueeSlow {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeSlow 30s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(27, 21, 18, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="vanilla"] .glass-panel,
+[data-theme="heritage"] .glass-panel,
+[data-theme="cherry"] .glass-panel,
+[data-theme="gold"] .glass-panel,
+[data-theme="sage"] .glass-panel,
+[data-theme="sky"] .glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--border-color);
 }

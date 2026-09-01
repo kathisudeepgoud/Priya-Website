@@ -187,7 +187,7 @@ export default function HeroRail3D({
   const isLaptop = screenWidth >= 1024;
 
   // Horizontal step gap between Main, Medium, and Small cards
-  const stepX = isMobile ? 85 : isTablet ? 150 : 210;
+  const stepX = isMobile ? 95 : isTablet ? 150 : 210;
 
   // Extra left offset margin: 0 for centered mobile/tablet, 35 for laptop
   const leftStartGap = isLaptop ? 35 : 0;
@@ -252,22 +252,22 @@ export default function HeroRail3D({
             tx = leftStartGap + (isDragging ? dragOffset * 0.7 : 0);
             tz = 70;
             rotY = -3;
-            scale = isMobile ? 0.96 : isTablet ? 1.0 : 1.06;
+            scale = isMobile ? 0.98 : isTablet ? 1.0 : 1.06;
             opacity = 1;
             zIndex = 40;
           } else if (displayOffset === 1) {
             tx = leftStartGap + stepX + (isDragging ? dragOffset * 0.7 : 0);
             tz = -35;
             rotY = -12;
-            scale = isMobile ? 0.78 : isTablet ? 0.82 : 0.86;
-            opacity = 0.95; // High clarity & low transparency for next image
+            scale = isMobile ? 0.82 : isTablet ? 0.82 : 0.86;
+            opacity = 0.95;
             zIndex = 30;
           } else if (displayOffset === 2) {
             tx = leftStartGap + stepX * 1.82 + (isDragging ? dragOffset * 0.7 : 0);
             tz = -90;
             rotY = -22;
-            scale = isMobile ? 0.62 : isTablet ? 0.68 : 0.72;
-            opacity = 0.82; // High clarity for 3rd image
+            scale = isMobile ? 0.65 : isTablet ? 0.68 : 0.72;
+            opacity = 0.82;
             zIndex = 20;
           } else {
             tx = leftStartGap + stepX * 2.5;
@@ -297,9 +297,9 @@ export default function HeroRail3D({
               }}
               onMouseEnter={() => setHoveredCardIndex(index)}
               onMouseLeave={() => setHoveredCardIndex(null)}
-              className={`absolute top-1/2 ${isLaptop ? "left-0" : "left-1/2 -ml-[110px] sm:-ml-[135px]"}
+              className={`absolute top-1/2 ${isLaptop ? "left-0" : "left-1/2 -ml-[120px] sm:-ml-[135px]"}
                 -mt-[150px] sm:-mt-[180px] md:-mt-[200px]
-                w-[220px] h-[300px] sm:w-[270px] sm:h-[360px] md:w-[320px] md:h-[400px]
+                w-[240px] h-[310px] sm:w-[270px] sm:h-[360px] md:w-[320px] md:h-[400px]
                 rounded-3xl transition-all ${isDragging ? "duration-75" : "duration-700 ease-out"}
                 will-change-transform cursor-pointer overflow-hidden border-none
                 ${isMain ? "shadow-[0_25px_50px_-12px_rgba(0,0,0,0.6),0_0_30px_rgba(122,27,52,0.4)]" : "shadow-xl"}
@@ -334,7 +334,7 @@ export default function HeroRail3D({
                     src={item.image}
                     alt={item.title}
                     fill
-                    sizes="(max-width: 640px) 220px, (max-width: 1024px) 270px, 320px"
+                    sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, 320px"
                     className="object-cover transition-transform duration-700 hover:scale-105"
                     priority={isMain}
                   />

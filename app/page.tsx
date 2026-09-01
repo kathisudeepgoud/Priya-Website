@@ -1,10 +1,10 @@
 import Loader from "@/components/Loader";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import SignatureDishes from "@/components/SignatureDishes";
 import Story from "@/components/Story";
-import Categories from "@/components/Categories";
-import { IceCreamsSection, FastFoodSection, MilkshakesSection, ParcelSection } from "@/components/MenuSections";
-import SpecialScroll from "@/components/SpecialScroll";
+import InteractiveMenu from "@/components/InteractiveMenu";
+import ProddaturIdentity from "@/components/ProddaturIdentity";
 import Rating from "@/components/Rating";
 import Storefront from "@/components/Storefront";
 import Gallery from "@/components/Gallery";
@@ -18,13 +18,10 @@ export default function Home() {
       <Loader />
       <Nav />
       <Hero />
+      <SignatureDishes />
       <Story />
-      <Categories />
-      <IceCreamsSection />
-      <SpecialScroll />
-      <FastFoodSection />
-      <MilkshakesSection />
-      <ParcelSection />
+      <InteractiveMenu />
+      <ProddaturIdentity />
       <Rating />
       <Storefront />
       <Gallery />

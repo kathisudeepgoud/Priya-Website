@@ -14,52 +14,17 @@ export type PaletteTheme = {
 export const COLOR_PALETTES: PaletteTheme[] = [
   {
     id: "dark",
-    name: "01 — Midnight Luxury",
+    name: "01 — MIDNIGHT LUXURY",
     category: "dark",
     colors: ["#0B0908", "#7A1B34", "#E5B95C", "#EFE6D2"],
     tagline: "Original Dark Luxury Theme"
   },
   {
     id: "vanilla",
-    name: "02 — Vanilla Cream",
+    name: "02 — VANILLA CREAM",
     category: "light",
     colors: ["#FAF4E8", "#6E162C", "#8C5E14", "#241815"],
     tagline: "Original Light Ivory & Warm Gold"
-  },
-  {
-    id: "heritage",
-    name: "03 — Priya Heritage",
-    category: "light",
-    colors: ["#FFF8EE", "#8E1B2B", "#D9A441", "#292525"],
-    tagline: "Deep Burgundy & Regal Gold"
-  },
-  {
-    id: "cherry",
-    name: "04 — Cherry Cream",
-    category: "light",
-    colors: ["#FFF7F5", "#A51D3A", "#E8A0A8", "#292225"],
-    tagline: "Rich Cherry & Soft Rose Accent"
-  },
-  {
-    id: "gold",
-    name: "05 — Vanilla Gold",
-    category: "light",
-    colors: ["#FFFBF2", "#B47A20", "#E8C875", "#2C2824"],
-    tagline: "Warm Warm Honey & Golden Amber"
-  },
-  {
-    id: "sage",
-    name: "06 — Sage Cream",
-    category: "light",
-    colors: ["#F7F7EF", "#7B8B68", "#D6B56A", "#252724"],
-    tagline: "Fresh Sage & Muted Crimson"
-  },
-  {
-    id: "sky",
-    name: "07 — Sky & Burgundy",
-    category: "light",
-    colors: ["#F4F8FA", "#92253A", "#DFAF4A", "#20242A"],
-    tagline: "Crisp Sky & Deep Burgundy"
   }
 ];
 
@@ -90,14 +55,14 @@ export default function ColorPaletteSwitcher() {
       >
         <Palette className="h-5 w-5 animate-pulse text-champagne group-hover:rotate-12 transition-transform" />
         <span className="font-label text-xs uppercase tracking-widest text-cream font-semibold hidden sm:inline">
-          Theme Palettes
+          Themes
         </span>
         <span className="flex h-2 w-2 rounded-full bg-gold" />
       </button>
 
       {/* Expanded Palette Drawer / Panel */}
       {isOpen && (
-        <div className="absolute bottom-16 right-0 w-[calc(100vw-2rem)] max-w-[380px] sm:w-[380px] rounded-3xl border border-gold/40 bg-charcoal/95 p-5 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div className="absolute bottom-16 right-0 w-[calc(100vw-2rem)] max-w-[340px] sm:w-[340px] rounded-3xl border border-gold/40 bg-charcoal/95 p-5 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] animate-in fade-in slide-in-from-bottom-4 duration-300">
           <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-champagne" />
@@ -114,24 +79,24 @@ export default function ColorPaletteSwitcher() {
           </div>
 
           <p className="font-body text-xs text-silver/80 mb-4 leading-relaxed">
-            Select any theme below to instantly update colors live across the website:
+            Select between the two signature Priya themes:
           </p>
 
-          <div className="space-y-2.5 max-h-[400px] overflow-y-auto pr-1">
+          <div className="space-y-3">
             {COLOR_PALETTES.map((palette) => {
               const isSelected = activeTheme === palette.id;
               return (
                 <button
                   key={palette.id}
                   onClick={() => changeTheme(palette.id)}
-                  className={`w-full text-left flex items-center justify-between p-3 rounded-2xl border transition-all duration-200 ${
+                  className={`w-full text-left flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-200 ${
                     isSelected
                       ? "border-champagne bg-white/10 shadow-lg ring-1 ring-champagne/50"
                       : "border-white/10 bg-white/[0.03] hover:border-gold/40 hover:bg-white/[0.07]"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    {/* 4 Visual Color Swatches */}
+                    {/* Visual Color Swatches */}
                     <div className="flex items-center gap-1 shrink-0 p-1.5 rounded-full bg-black/40 border border-white/10">
                       {palette.colors.map((c, i) => (
                         <span
