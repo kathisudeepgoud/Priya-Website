@@ -18,7 +18,7 @@ export default function HeroRail3D({
   onInteraction
 }: HeroRail3DProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Screen width state for responsive positioning
   const [screenWidth, setScreenWidth] = useState(1200);
 
@@ -34,7 +34,7 @@ export default function HeroRail3D({
   const touchStartY = useRef<number | null>(null);
   const isHorizontalSwipe = useRef<boolean | null>(null);
   const dragStartX = useRef(0);
-  
+
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
 
@@ -150,9 +150,8 @@ export default function HeroRail3D({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}
-      className={`relative flex h-[380px] sm:h-[440px] md:h-[480px] lg:h-[510px] xl:h-[530px] w-full max-w-full select-none items-center justify-center lg:justify-start touch-pan-y overflow-hidden py-6 ${
-        isDragging ? "cursor-grabbing" : "cursor-grab"
-      }`}
+      className={`relative flex h-[380px] sm:h-[440px] md:h-[480px] lg:h-[510px] xl:h-[530px] w-full max-w-full select-none items-center justify-center lg:justify-start touch-pan-y overflow-hidden py-6 ${isDragging ? "cursor-grabbing" : "cursor-grab"
+        }`}
       style={{ perspective: "1400px" }}
       aria-label="3D Hero Rail Carousel"
     >
@@ -233,10 +232,9 @@ export default function HeroRail3D({
                 w-[260px] h-[300px] sm:w-[300px] sm:h-[360px] md:w-[320px] md:h-[390px] lg:w-[340px] lg:h-[410px]
                 rounded-[28px] sm:rounded-[32px] transition-all ${isDragging ? "duration-75" : "duration-600 ease-out"}
                 will-change-transform cursor-pointer overflow-hidden border-2
-                ${
-                  isMain
-                    ? "border-gold/80 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(229,185,92,0.3)]"
-                    : "border-gold/30 shadow-2xl opacity-85"
+                ${isMain
+                  ? "border-gold/80 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(229,185,92,0.3)]"
+                  : "border-gold/30 shadow-2xl opacity-85"
                 }
               `}
               style={{

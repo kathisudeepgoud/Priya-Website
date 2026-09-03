@@ -46,14 +46,14 @@ export default function MagneticButton({
       style={{ x: springX, y: springY }}
       whileTap={{ scale: 0.94 }}
       className={cn(
-        "inline-flex items-center gap-2 rounded-full px-7 py-4 font-label text-xs uppercase tracking-widest transition-colors",
+        "inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-label text-xs uppercase tracking-widest transition-colors",
         variant === "primary" && "bg-champagne text-wine-deep font-bold hover:bg-gold",
         variant === "outline" && "border border-cream/40 text-cream hover:border-cream",
         className
       )}
     >
       {children}
-      <ArrowUpRight className="h-4 w-4" />
+      <ArrowUpRight className="h-3.5 w-3.5" />
     </motion.a>
   );
 }

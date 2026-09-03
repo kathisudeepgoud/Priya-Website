@@ -66,7 +66,7 @@ export default function Story() {
           </h2>
           <p className="story-p font-body text-sm sm:text-base md:text-lg leading-relaxed text-silver max-w-2xl mx-auto">
             For four decades, <b className="text-cream">Priya Ice Creams &amp; Fast Foods</b> has served
-            Proddatur from the same spirit of hospitality — North Indian dishes, hand-scooped ice creams, and
+            Proddatur from the same spirit of hospitality — Fast Food, hand-scooped ice creams, and
             thick milkshakes, made the way the neighbourhood has always known them.
           </p>
         </div>

@@ -23,7 +23,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="overflow-x-clip max-w-full">
+    <html lang="en" className="max-w-full">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="bg-charcoal text-cream font-body antialiased overflow-x-clip max-w-full w-full relative">
+      <body className="bg-charcoal text-cream font-body antialiased max-w-full w-full relative">
         <SmoothScroll>
           <CustomCursor />
           <div className="w-full relative">

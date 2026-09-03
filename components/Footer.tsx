@@ -76,7 +76,7 @@ export default function Footer() {
       <div className="pointer-events-none absolute -bottom-20 left-1/2 -translate-x-1/2 h-[500px] w-[600px] rounded-full bg-wine/25 blur-[150px]" />
 
       <div className="mx-auto max-w-[1400px] px-[5vw] relative z-10 space-y-12">
-        
+
         {/* TOP CALLOUT TYPOGRAPHY */}
         <div className="space-y-4">
           <span className="eyebrow tracking-[0.4em] font-bold block">COME TASTE THE CLASSICS.</span>
@@ -123,7 +123,7 @@ export default function Footer() {
 
         {/* LOGO & NAVIGATION LINKS */}
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-left">
-          
+
           {/* Logo & Info */}
           <div className="flex items-center gap-3">
             <div className="relative h-12 w-12 rounded-full border border-gold/60 p-0.5 bg-wine/40">

@@ -30,11 +30,10 @@ export default function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-[500] transition-all duration-300 ${
-        scrolled
+      className={`fixed inset-x-0 top-0 z-[500] transition-all duration-300 ${scrolled
           ? "backdrop-blur-md border-b border-gold/20 shadow-xl py-3.5"
           : "bg-gradient-to-b from-black/60 via-black/20 to-transparent py-3.5 sm:py-5"
-      }`}
+        }`}
       style={{
         backgroundColor: scrolled ? "var(--header-bg)" : "transparent"
       }}
