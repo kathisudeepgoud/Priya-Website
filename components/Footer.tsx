@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MapPin, Phone, MessageSquare, Heart, ArrowUpRight } from "lucide-react";
+import { MapPin, Phone, MessageSquare, Heart } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 import { businessInfo } from "@/lib/menu-data";
 
@@ -69,8 +69,8 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="relative theme-bg-main pt-28 pb-16 overflow-hidden max-w-full text-center gpu-layer"
-      aria-label="Priya Ice Creams & Fast Foods Footer"
+      className="relative theme-bg-main pt-24 pb-16 overflow-hidden max-w-full text-center gpu-layer"
+      aria-label="Priya Ice Creams Fastfood North Indian Footer"
     >
       {/* Background ambient lighting */}
       <div className="pointer-events-none absolute -bottom-20 left-1/2 -translate-x-1/2 h-[500px] w-[600px] rounded-full bg-wine/25 blur-[150px]" />
@@ -83,10 +83,10 @@ export default function Footer() {
 
           <h2
             ref={titleRef}
-            className="font-display text-[clamp(2.8rem,9vw,7.5rem)] uppercase leading-[0.85] text-cream drop-shadow-lg tracking-wide"
+            className="font-display text-[clamp(2.2rem,7.5vw,6rem)] uppercase leading-[0.9] text-cream drop-shadow-lg tracking-wide"
           >
             PRIYA ICE CREAMS <br className="hidden sm:block" />
-            <span className="text-gold">&amp; FAST FOODS</span>
+            <span className="text-gold">FASTFOOD NORTH INDIAN</span>
           </h2>
 
           <div className="font-label text-xs sm:text-sm uppercase tracking-[0.35em] text-champagne/90 font-semibold">
@@ -136,7 +136,7 @@ export default function Footer() {
             </div>
             <div>
               <b className="font-label text-sm uppercase tracking-widest text-cream block">
-                Priya Ice Creams &amp; Fast Foods
+                Priya Ice Creams Fastfood North Indian
               </b>
               <span className="font-body text-xs text-silver/70">
                 Proddatur, Andhra Pradesh · Since 1985
@@ -162,7 +162,7 @@ export default function Footer() {
         {/* FOOTER BOTTOM LEGAL & CREDITS */}
         <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-silver/60 gap-4">
           <div>
-            © 1985–2026 Priya Ice Creams &amp; Fast Foods, Proddatur. All rights reserved.
+            © 1985–2026 Priya Ice Creams Fastfood North Indian, Proddatur. All rights reserved.
           </div>
           <div className="flex items-center gap-1">
             Made with <Heart className="h-3.5 w-3.5 fill-wine text-wine inline mx-0.5" /> for Proddatur.

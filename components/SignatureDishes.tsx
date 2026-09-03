@@ -133,7 +133,7 @@ export default function SignatureDishes() {
             </h2>
           </div>
           <p className="font-body text-xs sm:text-sm text-silver/80 max-w-md leading-relaxed">
-            Six legendary creations that defined Priya Ice Creams &amp; Fast Foods over four decades of culinary excellence in Proddatur.
+            Six legendary creations that defined Priya Ice Creams Fastfood North Indian over four decades of culinary excellence in Proddatur.
           </p>
         </div>
 

@@ -49,6 +49,7 @@ export default function ColorPaletteSwitcher() {
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[600]">
       {/* Floating Toggle Button */}
       <button
+        data-theme-switcher
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Color Palette Switcher"
         className="group flex items-center gap-2.5 rounded-full border border-champagne/60 bg-wine px-4 py-3 text-champagne shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-300 hover:scale-105 hover:border-champagne hover:bg-wine/90 active:scale-95"

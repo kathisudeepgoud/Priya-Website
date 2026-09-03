@@ -1,30 +1,25 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import { Sparkles, UtensilsCrossed, IceCream, Flame } from "lucide-react";
 import { HeroItem } from "@/lib/hero-items";
 
 interface HeroRail3DProps {
   items: HeroItem[];
   activeIndex: number;
   onItemSelect: (index: number) => void;
-  isHovered: boolean;
-  setIsHovered: (hovered: boolean) => void;
+  onInteraction?: () => void;
 }
 
 export default function HeroRail3D({
   items,
   activeIndex,
   onItemSelect,
-  isHovered,
-  setIsHovered
+  onInteraction
 }: HeroRail3DProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
-
-  // Screen width state for fluid layout calculation across Mobile, Tablet, Laptop
+  
+  // Screen width state for responsive positioning
   const [screenWidth, setScreenWidth] = useState(1200);
 
   useEffect(() => {
@@ -34,41 +29,21 @@ export default function HeroRail3D({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Drag state
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState(0);
-  const dragStartX = useRef(0);
-  const dragStartTime = useRef(0);
-
-  // Parallax tracking on desktop / laptop
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (typeof window === "undefined" || window.innerWidth < 768) return;
-    if (!containerRef.current) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-    setMousePos({ x: x * 2, y: y * 2 });
-  }, []);
-
-  const handleMouseLeaveContainer = useCallback(() => {
-    setMousePos({ x: 0, y: 0 });
-    setIsHovered(false);
-    setHoveredCardIndex(null);
-  }, [setIsHovered]);
-
-  // Directional Touch Gesture Detection for Mobile (1-finger vertical scroll passes through, 1-finger horizontal swipe rotates carousel)
+  // Touch & Mouse Drag State
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
   const isHorizontalSwipe = useRef<boolean | null>(null);
+  const dragStartX = useRef(0);
+  
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
 
+  // Touch Swipe Handlers (Mobile)
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (e.touches.length !== 1) return;
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
     dragStartX.current = e.touches[0].clientX;
-    dragStartTime.current = Date.now();
     isHorizontalSwipe.current = null;
     setIsDragging(false);
     setDragOffset(0);
@@ -79,19 +54,13 @@ export default function HeroRail3D({
 
     const currentX = e.touches[0].clientX;
     const currentY = e.touches[0].clientY;
-
     const deltaX = Math.abs(currentX - touchStartX.current);
     const deltaY = Math.abs(currentY - touchStartY.current);
 
     if (isHorizontalSwipe.current === null) {
       if (deltaX > 6 || deltaY > 6) {
-        if (deltaX > deltaY) {
-          isHorizontalSwipe.current = true;
-          setIsDragging(true);
-        } else {
-          isHorizontalSwipe.current = false;
-          setIsDragging(false);
-        }
+        isHorizontalSwipe.current = deltaX > deltaY;
+        setIsDragging(isHorizontalSwipe.current);
       }
     }
 
@@ -105,14 +74,14 @@ export default function HeroRail3D({
     if (isHorizontalSwipe.current === true) {
       const touchEndX = e.changedTouches[0]?.clientX || dragStartX.current;
       const deltaX = touchEndX - dragStartX.current;
-      const deltaTime = Date.now() - dragStartTime.current;
-      const velocity = Math.abs(deltaX) / (deltaTime || 1);
-
       const N = items.length;
-      if (deltaX < -35 || (deltaX < -15 && velocity > 0.3)) {
+
+      if (deltaX < -35) {
         onItemSelect((activeIndex + 1) % N);
-      } else if (deltaX > 35 || (deltaX > 15 && velocity > 0.3)) {
+        onInteraction?.();
+      } else if (deltaX > 35) {
         onItemSelect((activeIndex - 1 + N) % N);
+        onInteraction?.();
       }
     }
 
@@ -123,116 +92,87 @@ export default function HeroRail3D({
     setDragOffset(0);
   };
 
-  // Mouse Drag Handlers for Desktop / Laptop
-  const handlePointerDown = (e: React.PointerEvent) => {
-    if (e.pointerType === "touch") return;
+  // Mouse Drag Handlers (Desktop / Laptop)
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
     setIsDragging(true);
     dragStartX.current = e.clientX;
-    dragStartTime.current = Date.now();
     setDragOffset(0);
-    if (containerRef.current) {
-      containerRef.current.style.cursor = "grabbing";
-    }
   };
 
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging || e.pointerType === "touch") return;
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
     const deltaX = e.clientX - dragStartX.current;
     setDragOffset(deltaX);
   };
 
-  const handlePointerUp = (e: React.PointerEvent) => {
-    if (!isDragging || e.pointerType === "touch") return;
+  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
     setIsDragging(false);
-    if (containerRef.current) {
-      containerRef.current.style.cursor = "grab";
-    }
 
     const deltaX = e.clientX - dragStartX.current;
-    const deltaTime = Date.now() - dragStartTime.current;
-    const velocity = Math.abs(deltaX) / (deltaTime || 1);
-
     const N = items.length;
-    if (deltaX < -40 || (deltaX < -15 && velocity > 0.4)) {
+
+    if (deltaX < -35) {
       onItemSelect((activeIndex + 1) % N);
-    } else if (deltaX > 40 || (deltaX > 15 && velocity > 0.4)) {
+      onInteraction?.();
+    } else if (deltaX > 35) {
       onItemSelect((activeIndex - 1 + N) % N);
+      onInteraction?.();
     }
 
     setDragOffset(0);
   };
 
-  const getCategoryIcon = (category: string) => {
-    if (
-      category.toLowerCase().includes("ice cream") ||
-      category.toLowerCase().includes("sundae") ||
-      category.toLowerCase().includes("dessert")
-    ) {
-      return <IceCream className="h-6 w-6 text-champagne" />;
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      setIsDragging(false);
+      setDragOffset(0);
     }
-    if (
-      category.toLowerCase().includes("fast food") ||
-      category.toLowerCase().includes("manchurian")
-    ) {
-      return <Flame className="h-6 w-6 text-champagne" />;
-    }
-    return <UtensilsCrossed className="h-6 w-6 text-champagne" />;
   };
 
   const N = items.length;
-
-  // Responsive device parameters
   const isMobile = screenWidth < 640;
   const isTablet = screenWidth >= 640 && screenWidth < 1024;
   const isLaptop = screenWidth >= 1024;
 
-  // Horizontal step gap between Main, Medium, and Small cards
-  const stepX = isMobile ? 95 : isTablet ? 150 : 210;
-
-  // Extra left offset margin: 0 for centered mobile/tablet, 35 for laptop
+  const stepX = isMobile ? 100 : isTablet ? 150 : 180;
   const leftStartGap = isLaptop ? 35 : 0;
 
   return (
     <div
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeaveContainer}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchEnd}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
-      className="relative flex h-full w-full max-w-full select-none items-center justify-center lg:justify-start cursor-grab touch-pan-y overflow-hidden"
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
+      className={`relative flex h-[380px] sm:h-[440px] md:h-[480px] lg:h-[510px] xl:h-[530px] w-full max-w-full select-none items-center justify-center lg:justify-start touch-pan-y overflow-hidden py-6 ${
+        isDragging ? "cursor-grabbing" : "cursor-grab"
+      }`}
       style={{ perspective: "1400px" }}
-      aria-label="3D Hero Carousel"
-      role="region"
+      aria-label="3D Hero Rail Carousel"
     >
-      {/* 3D Rail Container with Mouse Parallax Tilt */}
+      {/* 3D Rail Container */}
       <div
-        className="relative flex h-[340px] sm:h-[390px] md:h-[440px] w-full items-center justify-center lg:justify-start transition-transform duration-500 ease-out"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: `rotateY(${mousePos.x * 4}deg) rotateX(${-mousePos.y * 3}deg) translateX(${mousePos.x * 8}px)`
-        }}
+        className="relative flex h-full w-full items-center justify-center lg:justify-start"
+        style={{ transformStyle: "preserve-3d" }}
       >
         {items.map((item, index) => {
           let forwardOffset = (index - activeIndex + N) % N;
 
-          // Display ONLY 3 items: offset 0 (Main), offset 1 (Medium), offset 2 (Small).
+          // Display 3 cards: Main (0), Second (1), Third (2)
           let isVisible = forwardOffset === 0 || forwardOffset === 1 || forwardOffset === 2;
-
           let displayOffset = forwardOffset;
           if (forwardOffset === N - 1) {
             displayOffset = -1;
-            isVisible = true; // smooth exit slide left
+            isVisible = true; // smooth left exit
           }
 
           const isMain = displayOffset === 0;
-          const isHoveredCard = hoveredCardIndex === index;
 
           let tx = leftStartGap + displayOffset * stepX + (isDragging ? dragOffset * 0.7 : 0);
           let tz = 0;
@@ -242,48 +182,40 @@ export default function HeroRail3D({
           let zIndex = 10;
 
           if (displayOffset === -1) {
-            tx = leftStartGap - stepX * 0.9;
+            tx = leftStartGap - stepX * 0.85;
             tz = -120;
-            rotY = 20;
-            scale = 0.65;
+            rotY = 18;
+            scale = 0.68;
             opacity = 0;
             zIndex = 5;
           } else if (displayOffset === 0) {
             tx = leftStartGap + (isDragging ? dragOffset * 0.7 : 0);
-            tz = 70;
+            tz = 50;
             rotY = -3;
-            scale = isMobile ? 0.98 : isTablet ? 1.0 : 1.06;
+            scale = isMobile ? 0.94 : isTablet ? 0.98 : 1.0;
             opacity = 1;
             zIndex = 40;
           } else if (displayOffset === 1) {
             tx = leftStartGap + stepX + (isDragging ? dragOffset * 0.7 : 0);
-            tz = -35;
-            rotY = -12;
-            scale = isMobile ? 0.82 : isTablet ? 0.82 : 0.86;
-            opacity = 0.95;
+            tz = -40;
+            rotY = -14;
+            scale = isMobile ? 0.80 : 0.84;
+            opacity = 0.92;
             zIndex = 30;
           } else if (displayOffset === 2) {
-            tx = leftStartGap + stepX * 1.82 + (isDragging ? dragOffset * 0.7 : 0);
-            tz = -90;
-            rotY = -22;
-            scale = isMobile ? 0.65 : isTablet ? 0.68 : 0.72;
-            opacity = 0.82;
+            tx = leftStartGap + stepX * 1.8 + (isDragging ? dragOffset * 0.7 : 0);
+            tz = -100;
+            rotY = -24;
+            scale = isMobile ? 0.64 : 0.70;
+            opacity = 0.75;
             zIndex = 20;
           } else {
             tx = leftStartGap + stepX * 2.5;
-            tz = -250;
+            tz = -220;
             rotY = -45;
             scale = 0.45;
             opacity = 0;
             zIndex = 10;
-          }
-
-          // Hover boost on inactive right cards
-          if (isHoveredCard && !isMain && isVisible) {
-            tz += 30;
-            rotY *= 0.6;
-            scale += 0.04;
-            opacity = 1;
           }
 
           return (
@@ -293,16 +225,19 @@ export default function HeroRail3D({
                 if (Math.abs(dragOffset) < 10 && isVisible) {
                   e.stopPropagation();
                   onItemSelect(index);
+                  onInteraction?.();
                 }
               }}
-              onMouseEnter={() => setHoveredCardIndex(index)}
-              onMouseLeave={() => setHoveredCardIndex(null)}
-              className={`absolute top-1/2 ${isLaptop ? "left-0" : "left-1/2 -ml-[120px] sm:-ml-[135px]"}
-                -mt-[150px] sm:-mt-[180px] md:-mt-[200px]
-                w-[240px] h-[310px] sm:w-[270px] sm:h-[360px] md:w-[320px] md:h-[400px]
-                rounded-3xl transition-all ${isDragging ? "duration-75" : "duration-700 ease-out"}
-                will-change-transform cursor-pointer overflow-hidden border-none
-                ${isMain ? "shadow-[0_25px_50px_-12px_rgba(0,0,0,0.6),0_0_30px_rgba(122,27,52,0.4)]" : "shadow-xl"}
+              className={`absolute top-1/2 ${isLaptop ? "left-0" : "left-1/2 -ml-[130px] sm:-ml-[150px]"}
+                -mt-[150px] sm:-mt-[180px] md:-mt-[195px] lg:-mt-[205px]
+                w-[260px] h-[300px] sm:w-[300px] sm:h-[360px] md:w-[320px] md:h-[390px] lg:w-[340px] lg:h-[410px]
+                rounded-[28px] sm:rounded-[32px] transition-all ${isDragging ? "duration-75" : "duration-600 ease-out"}
+                will-change-transform cursor-pointer overflow-hidden border-2
+                ${
+                  isMain
+                    ? "border-gold/80 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(229,185,92,0.3)]"
+                    : "border-gold/30 shadow-2xl opacity-85"
+                }
               `}
               style={{
                 transformStyle: "preserve-3d",
@@ -312,91 +247,33 @@ export default function HeroRail3D({
                 pointerEvents: isVisible && opacity > 0.1 ? "auto" : "none"
               }}
             >
-              {/* Background gradient & grain texture */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#231A1E] via-[#151013] to-[#0B090A]" />
-
-              {/* Metallic glass sheen */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
-
-              {/* Patterned background lines */}
-              <div
-                className="absolute inset-0 opacity-15 pointer-events-none"
-                style={{
-                  backgroundImage: `radial-gradient(circle at 50% 50%, #E5B95C 1px, transparent 1px)`,
-                  backgroundSize: "24px 24px"
-                }}
-              />
-
-              {/* CONTENT: Real Image OR Styled Placeholder */}
-              {item.image ? (
-                <div className="relative h-full w-full">
+              {/* Card Image */}
+              {item.image && (
+                <div className="relative h-full w-full bg-black">
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, 320px"
-                    className="object-cover transition-transform duration-700 hover:scale-105"
+                    sizes="(max-width: 640px) 260px, (max-width: 1024px) 300px, 340px"
+                    className="object-cover object-center transition-transform duration-700 hover:scale-105"
                     priority={isMain}
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent ${isMain ? "opacity-95" : "opacity-75"}`} />
-                  <div className="absolute bottom-4 left-4 right-4 text-left">
-                    <span className="font-label text-[0.65rem] uppercase tracking-widest text-champagne font-semibold">
+
+                  {/* Gradient overlay at bottom of card */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent z-10" />
+
+                  {/* Card Bottom Details */}
+                  <div className="absolute bottom-3 left-3 right-3 z-20 text-left space-y-0.5">
+                    <span className="font-label text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] text-champagne font-bold block">
                       {item.category}
                     </span>
-                    <h3 className="font-display text-lg sm:text-xl text-white drop-shadow-md">{item.title}</h3>
-                    <p className="font-label text-xs sm:text-sm text-white/85">{item.tag}</p>
+                    <h3 className="font-display text-lg sm:text-xl text-cream drop-shadow-md leading-tight">
+                      {item.title}
+                    </h3>
+                    <p className="font-label text-[0.6rem] sm:text-[0.65rem] text-silver/90 font-medium truncate">
+                      {item.tag}
+                    </p>
                   </div>
-                </div>
-              ) : (
-                <div className="relative flex h-full w-full flex-col justify-between p-4 sm:p-5 text-center">
-                  {/* Top bar: Category badge & Number */}
-                  <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-champagne/30 bg-charcoal/60 px-2.5 py-0.5 sm:px-3 sm:py-1 font-label text-[0.6rem] sm:text-[0.65rem] uppercase tracking-widest text-champagne backdrop-blur-md">
-                      <Sparkles className="h-3 w-3 text-champagne" />
-                      {item.category}
-                    </span>
-                    <span className="font-display text-base sm:text-lg text-cream/40">
-                      0{index + 1}
-                    </span>
-                  </div>
-
-                  {/* Center visual centerpiece */}
-                  <div className="my-auto flex flex-col items-center justify-center gap-2 sm:gap-3">
-                    <div className="relative flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full border border-gold/40 bg-wine/20 shadow-[0_0_20px_rgba(229,185,92,0.15)] backdrop-blur-sm transition-transform duration-500 group-hover:scale-110">
-                      <div className="absolute inset-1 rounded-full border border-dashed border-champagne/40 animate-[spin_20s_linear_infinite]" />
-                      {getCategoryIcon(item.category)}
-                    </div>
-
-                    <div className="space-y-0.5 sm:space-y-1">
-                      <div className="font-label text-[0.65rem] sm:text-[0.7rem] uppercase tracking-[0.25em] text-champagne/90">
-                        Image Placeholder
-                      </div>
-                      <div className="font-body text-[0.6rem] sm:text-[0.65rem] text-silver/60 uppercase tracking-widest">
-                        Priya Food Asset #{item.id}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottom Dish Card Summary */}
-                  <div className="rounded-xl sm:rounded-2xl border border-white/10 bg-black/40 p-3 sm:p-3.5 backdrop-blur-md transition-all group-hover:border-champagne/40">
-                    <div className="flex items-center justify-between">
-                      <div className="text-left">
-                        <div className="font-display text-base sm:text-lg leading-none text-cream tracking-wide">
-                          {item.title}
-                        </div>
-                        <div className="font-label text-[0.6rem] sm:text-[0.65rem] uppercase tracking-wider text-silver/80 mt-1">
-                          {item.tag}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Glowing Bottom Accent Line */}
-                  <div
-                    className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-champagne to-transparent transition-opacity ${
-                      isMain ? "opacity-100" : "opacity-30"
-                    }`}
-                  />
                 </div>
               )}
             </div>

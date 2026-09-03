@@ -3,14 +3,35 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Flame, UtensilsCrossed, IceCream, Sparkles, GlassWater, PackageCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import {
+  Flame,
+  UtensilsCrossed,
+  IceCream,
+  Sparkles,
+  GlassWater,
+  PackageCheck,
+  Soup,
+  Wheat,
+  ChefHat,
+  ChevronLeft,
+  ChevronRight
+} from "lucide-react";
+import {
+  gobiItems,
+  mushroomItems,
+  paneerItems,
+  noodlesItems,
+  riceItems,
+  babyCornItems,
+  kajuItems,
+  soupItems,
+  biryaniItems,
+  vegCurryItems,
+  tandooriItems,
+  vegStarterItems,
   iceCreams,
   specialIceCreams,
-  manchurian,
-  riceItems,
   milkshakes,
-  milkAndLassi,
   iceCreamParcel,
   basanthiParcel,
   MenuItem
@@ -20,82 +41,158 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export type CategoryDef = {
+export type CategoryGroupDef = {
   id: string;
   name: string;
-  label: string;
+  section: string;
   icon: any;
   items: MenuItem[];
 };
 
-const CATEGORIES: CategoryDef[] = [
+const MENU_CATEGORIES: CategoryGroupDef[] = [
   {
-    id: "fastfood",
-    name: "FAST FOOD",
-    label: "FAST FOOD",
+    id: "gobi",
+    name: "Gobi Special",
+    section: "Fast Food",
     icon: Flame,
-    items: manchurian
+    items: gobiItems
   },
   {
-    id: "rice-noodles",
-    name: "RICE & NOODLES",
-    label: "RICE & NOODLES",
+    id: "mushroom",
+    name: "Mushroom",
+    section: "Fast Food",
+    icon: Flame,
+    items: mushroomItems
+  },
+  {
+    id: "paneer",
+    name: "Paneer Special",
+    section: "Fast Food",
+    icon: Flame,
+    items: paneerItems
+  },
+  {
+    id: "noodles",
+    name: "Noodles",
+    section: "Fast Food",
+    icon: UtensilsCrossed,
+    items: noodlesItems
+  },
+  {
+    id: "rice-items",
+    name: "Rice Items",
+    section: "Fast Food",
     icon: UtensilsCrossed,
     items: riceItems
   },
   {
+    id: "baby-corn",
+    name: "Baby Corn",
+    section: "Fast Food",
+    icon: Flame,
+    items: babyCornItems
+  },
+  {
+    id: "kaju",
+    name: "Kaju Special",
+    section: "Fast Food",
+    icon: Flame,
+    items: kajuItems
+  },
+  {
+    id: "soups",
+    name: "Soups",
+    section: "North Indian",
+    icon: Soup,
+    items: soupItems
+  },
+  {
+    id: "biryani",
+    name: "Biryani",
+    section: "North Indian",
+    icon: ChefHat,
+    items: biryaniItems
+  },
+  {
+    id: "veg-curries",
+    name: "Veg Curries",
+    section: "North Indian",
+    icon: ChefHat,
+    items: vegCurryItems
+  },
+  {
+    id: "tandoori",
+    name: "Tandoori & Roti",
+    section: "North Indian",
+    icon: Wheat,
+    items: tandooriItems
+  },
+  {
+    id: "veg-starters",
+    name: "Veg Starters",
+    section: "North Indian",
+    icon: ChefHat,
+    items: vegStarterItems
+  },
+  {
     id: "icecreams",
-    name: "ICE CREAMS",
-    label: "ICE CREAMS",
+    name: "Ice Creams",
+    section: "Desserts & Drinks",
     icon: IceCream,
     items: iceCreams
   },
   {
     id: "spl-icecreams",
-    name: "SPL. ICE CREAMS",
-    label: "SPL. ICE CREAMS",
+    name: "Spl. Ice Creams",
+    section: "Desserts & Drinks",
     icon: Sparkles,
     items: specialIceCreams
   },
   {
     id: "milkshakes",
-    name: "MILKSHAKES",
-    label: "MILKSHAKES",
+    name: "Milkshakes & Beverages",
+    section: "Desserts & Drinks",
     icon: GlassWater,
-    items: [...milkshakes, ...milkAndLassi]
+    items: milkshakes
   },
   {
-    id: "parcels",
-    name: "PARCELS",
-    label: "PARCELS",
+    id: "icecream-parcels",
+    name: "Ice Cream Parcels",
+    section: "Desserts & Drinks",
     icon: PackageCheck,
-    items: [...iceCreamParcel, ...basanthiParcel]
+    items: iceCreamParcel
+  },
+  {
+    id: "basanthi-parcels",
+    name: "Basanthi Parcels",
+    section: "Desserts & Drinks",
+    icon: PackageCheck,
+    items: basanthiParcel
   }
 ];
 
 export default function InteractiveMenu() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeCategory, setActiveCategory] = useState<string>("fastfood");
-  const [slideDirection, setSlideDirection] = useState<"next" | "prev">("next");
-  const [isAnimating, setIsAnimating] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const activeIdx = CATEGORIES.findIndex((c) => c.id === activeCategory);
-  const activeDef = CATEGORIES[activeIdx >= 0 ? activeIdx : 0];
+  const [activeCategory, setActiveCategory] = useState<string>("gobi");
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const activeIdx = MENU_CATEGORIES.findIndex((c) => c.id === activeCategory);
+  const activeDef = MENU_CATEGORIES[activeIdx >= 0 ? activeIdx : 0];
 
   const handleCategorySwitch = useCallback(
-    (targetId: string, direction: "next" | "prev") => {
+    (targetId: string) => {
       if (isAnimating || targetId === activeCategory) return;
       setIsAnimating(true);
-      setSlideDirection(direction);
 
       if (listRef.current) {
-        const exitX = direction === "next" ? -60 : 60;
         gsap.to(listRef.current.children, {
-          x: exitX,
           opacity: 0,
-          duration: 0.18,
-          stagger: 0.02,
+          y: -10,
+          duration: 0.15,
+          stagger: 0.015,
           ease: "power2.in",
           onComplete: () => {
             setActiveCategory(targetId);
@@ -109,39 +206,50 @@ export default function InteractiveMenu() {
     [activeCategory, isAnimating]
   );
 
-  const goToNextCat = () => {
-    if (activeIdx < CATEGORIES.length - 1) {
-      handleCategorySwitch(CATEGORIES[activeIdx + 1].id, "next");
+  // Scroll active pill into center inside horizontal category navbar track only
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const activeBtn = container.querySelector<HTMLButtonElement>(`[data-cat-id="${activeCategory}"]`);
+    if (activeBtn) {
+      const scrollLeftTarget = activeBtn.offsetLeft - container.offsetWidth / 2 + activeBtn.offsetWidth / 2;
+      container.scrollTo({
+        left: Math.max(0, scrollLeftTarget),
+        behavior: "smooth"
+      });
     }
-  };
-
-  const goToPrevCat = () => {
-    if (activeIdx > 0) {
-      handleCategorySwitch(CATEGORIES[activeIdx - 1].id, "prev");
-    }
-  };
+  }, [activeCategory]);
 
   // Animate items entering on category switch
   useEffect(() => {
     if (!listRef.current) return;
-    const enterX = slideDirection === "next" ? 60 : -60;
-
     gsap.fromTo(
       listRef.current.children,
-      { x: enterX, opacity: 0, scale: 0.98 },
+      { y: 15, opacity: 0 },
       {
-        x: 0,
+        y: 0,
         opacity: 1,
-        scale: 1,
-        duration: 0.3,
-        stagger: 0.03,
+        duration: 0.28,
+        stagger: 0.02,
         ease: "power2.out",
         onComplete: () => {
           setIsAnimating(false);
         }
       }
     );
-  }, [activeCategory, slideDirection]);
+  }, [activeCategory]);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -220, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 220, behavior: "smooth" });
+    }
+  };
 
   return (
     <section
@@ -150,153 +258,133 @@ export default function InteractiveMenu() {
       className="theme-bg-alt py-16 sm:py-28 max-w-full relative overflow-x-clip"
       aria-label="Priya Complete Interactive Menu"
     >
-      <div className="mx-auto max-w-[1400px] px-[5vw]">
+      <div className="mx-auto max-w-[1400px] px-[4vw] sm:px-[5vw]">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-12 space-y-3">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 space-y-2.5">
           <span className="eyebrow tracking-[0.35em] font-bold">AUTHENTIC PRODDATUR RECIPES</span>
-          <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] uppercase leading-none text-cream">
+          <h2 className="font-display text-[clamp(2.4rem,6vw,4.8rem)] uppercase leading-none text-cream">
             EXPLORE OUR MENU
           </h2>
           <p className="font-body text-xs sm:text-sm text-silver/90">
-            Hand-crafted Indo-Chinese fast foods, royal ice creams, and thick milkshakes. All prices in INR.
+            Hand-crafted Indo-Chinese fast foods, North Indian dishes, royal ice creams, and thick milkshakes.
           </p>
         </div>
 
         {/* ========================================================================= */}
-        {/* MOBILE ONLY NATIVE CSS STICKY CATEGORY NAV (< md) - BOUNDED TO MENU SECTION */}
+        {/* STICKY HORIZONTALLY SCROLLABLE CATEGORY NAVIGATION BAR */}
         {/* ========================================================================= */}
-        <div className="md:hidden sticky top-14 z-30 -mx-[5vw] px-[5vw] py-2.5 bg-charcoal/95 backdrop-blur-xl border-b border-gold/25 shadow-[0_12px_30px_rgba(0,0,0,0.4)] flex flex-col items-center gap-2 mb-8 transition-all duration-300">
-          
-          {/* Carousel Control Row */}
-          <div className="flex items-center justify-between gap-3 w-full max-w-md">
+        <div className="sticky top-14 z-40 -mx-[4vw] sm:-mx-[5vw] px-[4vw] sm:px-[5vw] py-3 bg-[#140D10]/95 backdrop-blur-xl border-y border-gold/25 shadow-[0_10px_25px_rgba(0,0,0,0.5)] mb-8 transition-all">
+          <div className="relative flex items-center max-w-[1400px] mx-auto">
             
-            {/* LEFT ARROW BUTTON */}
+            {/* Scroll Left Button */}
             <button
-              onClick={goToPrevCat}
-              disabled={activeIdx === 0 || isAnimating}
-              aria-label="Previous Category"
-              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all duration-300 ${
-                activeIdx === 0
-                  ? "opacity-20 cursor-not-allowed text-silver/40 border border-transparent"
-                  : "text-champagne bg-wine/30 border border-gold/35 hover:bg-wine hover:text-white active:scale-95 shadow-md"
-              }`}
+              onClick={scrollLeft}
+              aria-label="Scroll categories left"
+              className="hidden md:flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-wine/60 text-champagne hover:bg-wine hover:border-champagne transition-all active:scale-95 mr-2"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-5 w-5" />
             </button>
 
-            {/* ACTIVE CATEGORY DISPLAY BUTTON */}
-            <button
-              key={activeDef.id}
-              onClick={() => {}}
-              className="flex-1 flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-xl bg-champagne text-wine-deep border border-gold font-bold shadow-md transition-all duration-300 active:scale-98"
+            {/* Horizontal Scroll Track */}
+            <div
+              ref={scrollContainerRef}
+              className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 w-full touch-pan-x"
             >
-              <activeDef.icon className="h-5 w-5 text-wine-deep stroke-[2.5] shrink-0" />
-              <span className="font-label text-sm uppercase tracking-wider font-bold truncate">
-                {activeDef.name}
-              </span>
-            </button>
+              {MENU_CATEGORIES.map((cat) => {
+                const Icon = cat.icon;
+                const isActive = activeCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    data-cat-id={cat.id}
+                    onClick={() => handleCategorySwitch(cat.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full font-label text-xs uppercase tracking-wider whitespace-nowrap transition-all duration-300 shrink-0 ${
+                      isActive
+                        ? "text-wine-deep bg-champagne font-bold shadow-lg border border-gold scale-105"
+                        : "text-cream bg-white/10 border border-white/15 hover:border-gold hover:text-champagne hover:bg-white/20"
+                    }`}
+                  >
+                    <Icon className={`h-3.5 w-3.5 shrink-0 ${isActive ? "text-wine-deep stroke-[2.5]" : "text-champagne"}`} />
+                    <span>{cat.name}</span>
+                  </button>
+                );
+              })}
+            </div>
 
-            {/* RIGHT ARROW BUTTON */}
+            {/* Scroll Right Button */}
             <button
-              onClick={goToNextCat}
-              disabled={activeIdx === CATEGORIES.length - 1 || isAnimating}
-              aria-label="Next Category"
-              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all duration-300 ${
-                activeIdx === CATEGORIES.length - 1
-                  ? "opacity-20 cursor-not-allowed text-silver/40 border border-transparent"
-                  : "text-champagne bg-wine/30 border border-gold/35 hover:bg-wine hover:text-white active:scale-95 shadow-md"
-              }`}
+              onClick={scrollRight}
+              aria-label="Scroll categories right"
+              className="hidden md:flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-wine/60 text-champagne hover:bg-wine hover:border-champagne transition-all active:scale-95 ml-2"
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-5 w-5" />
             </button>
 
           </div>
-
-          {/* PROGRESS DOTS (● ○ ○ ○ ○ ○) */}
-          <div className="flex items-center justify-center gap-2 py-0.5">
-            {CATEGORIES.map((cat, i) => {
-              const isCurrent = i === activeIdx;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => handleCategorySwitch(cat.id, i > activeIdx ? "next" : "prev")}
-                  disabled={isAnimating}
-                  aria-label={`Select category ${cat.name}`}
-                  className={`transition-all duration-300 rounded-full ${
-                    isCurrent
-                      ? "w-6 h-2.5 bg-champagne border border-gold shadow-sm scale-105"
-                      : "w-2.5 h-2.5 bg-white/20 hover:bg-gold/40 border border-white/10"
-                  }`}
-                />
-              );
-            })}
-          </div>
         </div>
 
-        {/* ========================================================================= */}
-        {/* DESKTOP CATEGORY NAV (>= md) — UNCHANGED */}
-        {/* ========================================================================= */}
-        <div className="hidden md:flex flex-wrap justify-center items-center gap-3 mb-10 w-full p-2 rounded-full bg-wine-deep/60 backdrop-blur-md">
-          {CATEGORIES.map((cat, i) => {
-            const Icon = cat.icon;
-            const isActive = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => handleCategorySwitch(cat.id, i > activeIdx ? "next" : "prev")}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-label text-sm uppercase tracking-wider transition-all duration-300 ${
-                  isActive
-                    ? "text-wine-deep bg-champagne font-bold shadow-md scale-105 border border-gold"
-                    : "text-cream bg-white/10 border border-white/15 hover:border-gold hover:text-champagne hover:bg-white/20"
-                }`}
-              >
-                <Icon className={`h-4 w-4 shrink-0 ${isActive ? "text-wine-deep stroke-[2.5]" : "text-champagne"}`} />
-                <span className="whitespace-nowrap">{cat.label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Active Category Header */}
-        <div className="flex items-center justify-between border-b border-gold/30 pb-4 mb-8 scroll-mt-28">
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-gold bg-wine text-champagne shadow-md shrink-0">
-              <activeDef.icon className="h-6 w-6 text-champagne" />
+        {/* Active Category Title & Item Count Header */}
+        <div className="flex items-center justify-between border-b border-gold/30 pb-4 mb-6">
+          <div className="flex items-center gap-3.5">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-gold bg-wine text-champagne shadow-md shrink-0">
+              <activeDef.icon className="h-5 w-5 text-champagne" />
             </div>
             <div>
-              <h3 className="font-display text-3xl sm:text-4xl text-cream tracking-wide uppercase">
+              <span className="font-label text-[0.65rem] uppercase tracking-widest text-champagne font-bold">
+                {activeDef.section}
+              </span>
+              <h3 className="font-display text-2xl sm:text-3xl text-cream tracking-wide uppercase leading-tight">
                 {activeDef.name}
               </h3>
-              <p className="font-label text-xs uppercase tracking-widest text-champagne font-semibold mt-0.5">
-                {activeDef.items.length} Items Available
-              </p>
             </div>
           </div>
+          <span className="font-label text-xs uppercase tracking-widest text-silver/60">
+            {activeDef.items.length} Items
+          </span>
         </div>
 
-        {/* Menu Items Grid with Slide/Fade Transition */}
+        {/* Menu Items Grid */}
         <div
           ref={listRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-3.5 min-h-[300px]"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 min-h-[260px]"
         >
           {activeDef.items.map((item, idx) => (
             <div
               key={`${item.name}-${idx}`}
-              className="group flex items-center justify-between rounded-xl border border-white/15 bg-black/40 px-4.5 py-4 transition-all duration-300 hover:border-gold hover:bg-wine/30 shadow-md hover:shadow-xl"
+              className="group flex items-center justify-between rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 transition-all duration-300 hover:border-gold/60 hover:bg-wine/30 shadow-md"
             >
-              <div>
-                <h4 className="font-display text-lg sm:text-xl uppercase tracking-wide text-cream group-hover:text-champagne transition-colors">
-                  {item.name}
-                </h4>
+              <div className="flex items-center gap-2.5 pr-2 min-w-0">
+                {/* Veg / Egg Badge Indicator */}
+                <div
+                  title={item.isEgg ? "Egg Item" : "Vegetarian Item"}
+                  className={`h-4 w-4 shrink-0 rounded-sm border p-0.5 flex items-center justify-center ${
+                    item.isEgg ? "border-amber-500" : "border-emerald-500"
+                  }`}
+                >
+                  <div
+                    className={`h-2 w-2 rounded-full ${
+                      item.isEgg ? "bg-amber-500" : "bg-emerald-500"
+                    }`}
+                  />
+                </div>
+
+                {/* Name & Telugu Script */}
+                <div className="min-w-0">
+                  <h4 className="font-display text-base sm:text-lg uppercase tracking-wide text-cream group-hover:text-champagne transition-colors truncate">
+                    {item.name}
+                  </h4>
+                  {item.teluguName && (
+                    <span className="font-body text-xs text-silver/70 block leading-tight truncate">
+                      {item.teluguName}
+                    </span>
+                  )}
+                </div>
               </div>
 
-              {/* Middle: Dashed separator */}
-              <div className="mx-4 flex-1 border-b border-dashed border-silver/30 group-hover:border-champagne/60 transition-colors" />
-
-              {/* Right: Price */}
-              <div className="flex items-center gap-2 shrink-0">
-                <span className="font-display text-xl sm:text-2xl text-champagne font-semibold group-hover:scale-105 transition-transform">
+              {/* Price */}
+              <div className="shrink-0 pl-2">
+                <span className="font-display text-lg sm:text-xl text-champagne font-semibold">
                   ₹{item.price}
                 </span>
               </div>

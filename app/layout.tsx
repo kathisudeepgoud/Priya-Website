@@ -4,9 +4,9 @@ import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
-  title: "Priya Ice Creams & Fast Foods — Since 1985, Proddatur",
+  title: "Priya Ice Creams Fastfood North Indian — Since 1985, Proddatur",
   description:
-    "Priya Ice Creams & Fast Foods, Proddatur — North Indian dishes, hand-scooped ice creams and thick milkshakes since 1985.",
+    "Priya Ice Creams Fastfood North Indian, Proddatur — Ice creams, fast food, milkshakes and North Indian dishes since 1985.",
   icons: {
     icon: "/priya-logo.png",
     shortcut: "/priya-logo.png",

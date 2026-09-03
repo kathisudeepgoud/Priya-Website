@@ -16,6 +16,13 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       typeof window !== "undefined" &&
       (window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window);
 
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }
+
     if (isTouch) return;
 
     const lenis = new Lenis({
@@ -24,6 +31,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       smoothWheel: true
     });
     lenisRef.current = lenis;
+    lenis.scrollTo(0, { immediate: true });
 
     // Sync Lenis with GSAP's ticker so ScrollTrigger stays in lockstep.
     lenis.on("scroll", ScrollTrigger.update);
