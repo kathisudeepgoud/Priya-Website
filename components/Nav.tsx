@@ -28,6 +28,44 @@ export default function Nav() {
 
   const closeMenu = () => setMobileMenuOpen(false);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      closeMenu();
+      const targetEl = document.querySelector(href);
+      if (targetEl) {
+        const headerOffset = 70;
+        const elementPosition = targetEl.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: "smooth"
+        });
+
+        // Trigger entrance animation explicitly when clicking nav link
+        if (typeof window !== "undefined") {
+          import("gsap").then(({ gsap }) => {
+            if (href === "#gallery") {
+              gsap.fromTo(
+                ".gal-item",
+                { opacity: 0, scale: 0.88, y: 30 },
+                {
+                  opacity: 1,
+                  scale: 1,
+                  y: 0,
+                  duration: 0.8,
+                  stagger: 0.08,
+                  ease: "power3.out"
+                }
+              );
+            }
+          });
+        }
+      }
+    }
+  };
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-[500] transition-all duration-300 ${scrolled
@@ -39,8 +77,8 @@ export default function Nav() {
       }}
     >
       <div className="relative flex items-center justify-between px-[5vw] max-w-[1400px] mx-auto">
-        <a href="#hero" onClick={closeMenu} className="flex items-center gap-3 group">
-          <div className="relative rounded-full border border-gold/50 p-0.5 bg-wine/40 group-hover:border-champagne transition-colors">
+        <a href="#hero" onClick={(e) => handleNavClick(e, "#hero")} className="flex items-center gap-3 group">
+          <div className="relative rounded-full p-0.5 bg-wine/40 transition-colors">
             <Image
               src="/priya-logo.png"
               alt="Priya logo"
@@ -61,6 +99,7 @@ export default function Nav() {
               <li key={l.href}>
                 <a
                   href={l.href}
+                  onClick={(e) => handleNavClick(e, l.href)}
                   className="font-label text-xs uppercase tracking-widest text-silver hover:text-champagne transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-champagne after:transition-all hover:after:w-full"
                 >
                   {l.label}
@@ -87,7 +126,7 @@ export default function Nav() {
                 <a
                   key={l.href}
                   href={l.href}
-                  onClick={closeMenu}
+                  onClick={(e) => handleNavClick(e, l.href)}
                   className="flex items-center justify-between rounded-xl px-3.5 py-2.5 font-label text-xs uppercase tracking-wider text-cream transition-all hover:bg-wine/40 hover:text-champagne active:bg-wine/60"
                 >
                   <span>{l.label}</span>

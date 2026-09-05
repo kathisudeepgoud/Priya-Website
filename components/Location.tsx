@@ -16,7 +16,6 @@ export default function Location() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       if (textRef.current) {
         gsap.fromTo(
@@ -31,7 +30,7 @@ export default function Location() {
               trigger: sectionRef.current,
               start: "top 85%",
               end: "bottom 15%",
-              toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
+              toggleActions: "restart pause resume reverse"
             }
           }
         );
@@ -51,7 +50,7 @@ export default function Location() {
               trigger: sectionRef.current,
               start: "top 85%",
               end: "bottom 15%",
-              toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
+              toggleActions: "restart pause resume reverse"
             }
           }
         );
@@ -74,9 +73,6 @@ export default function Location() {
             </MagneticButton>
             <MagneticButton href="tel:+91" variant="outline" cursorLabel="Call">
               Call Now
-            </MagneticButton>
-            <MagneticButton href="https://wa.me/" target="_blank" variant="outline" cursorLabel="Chat">
-              WhatsApp
             </MagneticButton>
           </div>
         </div>

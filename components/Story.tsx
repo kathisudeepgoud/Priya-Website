@@ -19,7 +19,7 @@ export default function Story() {
           trigger: sectionRef.current,
           start: "top 85%",
           end: "bottom 15%",
-          toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
+          toggleActions: "restart pause resume reverse"
         }
       });
 

@@ -103,7 +103,7 @@ export default function InteractiveMenu() {
     setActiveCategory(catId);
     const targetEl = document.getElementById(`cat-${catId}`);
     if (targetEl) {
-      const headerOffset = typeof window !== "undefined" && window.innerWidth < 640 ? 128 : 142;
+      const headerOffset = typeof window !== "undefined" && window.innerWidth < 640 ? 134 : 148;
       const elementPosition = targetEl.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -161,9 +161,9 @@ export default function InteractiveMenu() {
       </div>
 
       {/* ========================================================================= */}
-      {/* PERMANENT STICKY CATEGORY NAVBAR (PINNED AT TOP-[56PX] BELOW TOP NAV BAR) */}
+      {/* PERMANENT STICKY CATEGORY NAVBAR (PINNED AT TOP-[64PX]/[76PX] BELOW TOP NAV BAR) */}
       {/* ========================================================================= */}
-      <div className="sticky top-[52px] sm:top-[60px] z-[400] w-full py-3 bg-[#140D10]/98 backdrop-blur-2xl border-y border-gold/30 shadow-[0_12px_30px_rgba(0,0,0,0.8)] mb-12 transition-all">
+      <div className="sticky top-[64px] sm:top-[76px] z-[400] w-full py-3 bg-[#140D10]/98 backdrop-blur-2xl border-y border-gold/30 shadow-[0_12px_30px_rgba(0,0,0,0.8)] mb-12 transition-all">
         <div className="relative flex items-center max-w-[1400px] mx-auto px-[4vw] sm:px-[5vw]">
           
           {/* Scroll Left Button */}

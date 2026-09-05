@@ -96,10 +96,10 @@ export default function Loader() {
             className="absolute -inset-4 rounded-full border border-dashed border-champagne/60 opacity-80"
           />
 
-          {/* Logo container with double border glow */}
+          {/* Logo container with double glow */}
           <div
             ref={logoRef}
-            className="relative h-28 w-28 sm:h-36 sm:w-36 rounded-full border-2 border-gold p-1 bg-wine/60 shadow-[0_0_50px_rgba(229,185,92,0.4)] overflow-hidden"
+            className="relative h-28 w-28 sm:h-36 sm:w-36 rounded-full p-1 bg-wine/60 shadow-[0_0_50px_rgba(229,185,92,0.4)] overflow-hidden"
           >
             <Image
               src="/priya-logo.png"

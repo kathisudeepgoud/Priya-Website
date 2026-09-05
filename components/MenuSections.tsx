@@ -22,7 +22,6 @@ function SectionHead({ eyebrow, title }: { eyebrow: string; title: string }) {
   const headRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       if (!headRef.current) return;
       gsap.fromTo(
@@ -37,7 +36,7 @@ function SectionHead({ eyebrow, title }: { eyebrow: string; title: string }) {
             trigger: headRef.current,
             start: "top 85%",
             end: "bottom 15%",
-            toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
+            toggleActions: "restart pause resume reverse"
           }
         }
       );

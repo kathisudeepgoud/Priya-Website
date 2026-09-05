@@ -104,10 +104,10 @@ export default function Hero() {
       <div className="pointer-events-none absolute -bottom-20 right-1/4 h-[450px] w-[450px] rounded-full bg-champagne/15 blur-[140px]" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto my-auto py-2">
-        <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-12 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-3 lg:gap-12 w-full">
           
-          {/* LEFT COLUMN: TITLE BLOCK + DESCRIPTION + HIGHLIGHT CARD + BUTTONS */}
-          <div className="flex flex-col justify-center text-left lg:col-span-6 xl:col-span-5 space-y-4">
+          {/* LEFT COLUMN: TITLE BLOCK + DESCRIPTION + HIGHLIGHT CARD */}
+          <div className="flex flex-col justify-center text-left lg:col-span-6 xl:col-span-5 space-y-3 lg:space-y-4">
             
             {/* ========================================================================= */}
             {/* LEFT-ALIGNED TITLE BLOCK WITH LOGO & 4 CENTERED LINES NEXT TO IT */}
@@ -115,7 +115,7 @@ export default function Hero() {
             <div className="hero-fade-item flex items-stretch gap-3 sm:gap-4.5">
               
               {/* LOGO CONTAINER — HEIGHT EQUALS THE 4 TEXT LINES */}
-              <div className="relative shrink-0 flex items-center justify-center rounded-2xl border-2 border-gold/70 p-1 bg-gradient-to-br from-wine/80 via-charcoal to-black shadow-[0_0_35px_rgba(229,185,92,0.3)] self-stretch aspect-square min-h-[105px] sm:min-h-[135px] md:min-h-[150px]">
+              <div className="relative shrink-0 flex items-center justify-center rounded-2xl p-1 bg-gradient-to-br from-wine/80 via-charcoal to-black shadow-[0_0_35px_rgba(229,185,92,0.3)] self-stretch aspect-square min-h-[105px] sm:min-h-[135px] md:min-h-[150px]">
                 <Image
                   src="/priya-logo.png"
                   alt="Priya Logo"
@@ -150,7 +150,7 @@ export default function Hero() {
 
             </div>
 
-            {/* RESTAURANT DESCRIPTION (EXACT ORIGINAL TEXT UNCHANGED) */}
+            {/* RESTAURANT DESCRIPTION */}
             <p className="hero-fade-item font-body text-xs sm:text-sm md:text-base text-silver/85 max-w-md leading-relaxed">
               Ice creams, fast food, milkshakes and favourites in Proddatur.
             </p>
@@ -180,23 +180,9 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* CTA BUTTONS WITH COMPACT PADDING */}
-            <div className="hero-fade-item flex flex-wrap items-center gap-3 pt-1">
-              <MagneticButton href="#menu" variant="primary" cursorLabel="Explore" className="px-4.5 py-2 sm:px-5 sm:py-2.5">
-                <span className="flex items-center gap-1.5 text-xs font-bold">
-                  EXPLORE MENU <ArrowUpRight className="h-3.5 w-3.5 stroke-[2.5]" />
-                </span>
-              </MagneticButton>
-              <MagneticButton href={businessInfo.googleMapsUrl} target="_blank" variant="outline" cursorLabel="Directions" className="px-4.5 py-2 sm:px-5 sm:py-2.5">
-                <span className="flex items-center gap-1.5 text-xs font-semibold">
-                  GET DIRECTIONS <ArrowUpRight className="h-3.5 w-3.5 stroke-[2.5]" />
-                </span>
-              </MagneticButton>
-            </div>
-
           </div>
 
-          {/* RIGHT COLUMN: 3D CARD CAROUSEL RAIL */}
+          {/* RIGHT COLUMN: 3D CARD CAROUSEL RAIL (IMAGES) */}
           <div className="hero-fade-item flex flex-col items-center lg:col-span-6 xl:col-span-7 w-full">
             <HeroRail3D
               items={HERO_ITEMS}
@@ -206,6 +192,20 @@ export default function Hero() {
             />
           </div>
 
+        </div>
+
+        {/* CTA BUTTONS (ORDER: DESCRIPTION -> IMAGES -> BUTTONS) */}
+        <div className="hero-fade-item flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-6 mt-2">
+          <MagneticButton href="#menu" variant="primary" cursorLabel="Explore" className="px-8 sm:px-10 py-3 sm:py-3.5">
+            <span className="text-xs font-bold">
+              EXPLORE MENU
+            </span>
+          </MagneticButton>
+          <MagneticButton href={businessInfo.googleMapsUrl} target="_blank" variant="outline" cursorLabel="Directions" className="px-8 sm:px-10 py-3 sm:py-3.5">
+            <span className="text-xs font-semibold">
+              GET DIRECTIONS
+            </span>
+          </MagneticButton>
         </div>
       </div>
     </section>

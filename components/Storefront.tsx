@@ -12,7 +12,6 @@ export default function Storefront() {
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         imgRef.current,
@@ -27,7 +26,7 @@ export default function Storefront() {
             trigger: imgRef.current,
             start: "top 85%",
             end: "bottom 15%",
-            toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
+            toggleActions: "restart pause resume reverse"
           }
         }
       );
@@ -43,7 +42,7 @@ export default function Storefront() {
             trigger: textRef.current,
             start: "top 85%",
             end: "bottom 15%",
-            toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
+            toggleActions: "restart pause resume reverse"
           }
         }
       );

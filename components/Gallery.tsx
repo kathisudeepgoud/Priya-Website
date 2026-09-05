@@ -19,34 +19,34 @@ const ITEMS = [
 ];
 
 export default function Gallery() {
-  const gridRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".gal-item",
-        { opacity: 0, scale: 0.92 },
+        { opacity: 0, scale: 0.88, y: 30 },
         {
           opacity: 1,
           scale: 1,
+          y: 0,
           duration: 0.8,
           stagger: 0.08,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: gridRef.current,
+            trigger: sectionRef.current,
             start: "top 85%",
             end: "bottom 15%",
-            toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
+            toggleActions: "restart pause resume reverse"
           }
         }
       );
-    }, gridRef);
+    }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="gallery" className="theme-bg-main py-28 sm:py-32 overflow-hidden max-w-full gpu-layer">
+    <section id="gallery" ref={sectionRef} className="theme-bg-main py-28 sm:py-32 overflow-hidden max-w-full gpu-layer scroll-mt-20">
       <div className="mx-auto max-w-[1400px] px-[5vw]">
         <div className="mb-14 text-left border-b border-gold/30 pb-6 flex items-end justify-between flex-wrap gap-4">
           <div>
@@ -61,7 +61,6 @@ export default function Gallery() {
         </div>
 
         <div
-          ref={gridRef}
           className="grid grid-cols-2 gap-4 sm:grid-cols-6"
           style={{ gridAutoRows: "160px" }}
         >

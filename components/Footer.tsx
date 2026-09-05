@@ -26,7 +26,6 @@ export default function Footer() {
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         titleRef.current,
@@ -40,7 +39,7 @@ export default function Footer() {
             trigger: footerRef.current,
             start: "top 85%",
             end: "bottom top",
-            toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
+            toggleActions: "restart pause resume reverse"
           }
         }
       );
@@ -57,7 +56,8 @@ export default function Footer() {
           scrollTrigger: {
             trigger: footerRef.current,
             start: "top 80%",
-            end: "bottom top"
+            end: "bottom top",
+            toggleActions: "restart pause resume reverse"
           }
         }
       );
@@ -83,10 +83,14 @@ export default function Footer() {
 
           <h2
             ref={titleRef}
-            className="font-display text-[clamp(2.2rem,7.5vw,6rem)] uppercase leading-[0.9] text-cream drop-shadow-lg tracking-wide"
+            className="font-display uppercase leading-[0.95] drop-shadow-lg tracking-wide"
           >
-            PRIYA ICE CREAMS <br className="hidden sm:block" />
-            <span className="text-gold">FASTFOOD NORTH INDIAN</span>
+            <span className="block text-[clamp(3rem,10vw,7.5rem)] text-cream">
+              PRIYA
+            </span>
+            <span className="block text-[clamp(1.2rem,3.8vw,2.6rem)] text-gold tracking-widest mt-2 sm:mt-3">
+              ICE CREAMS FASTFOOD NORTH INDIAN
+            </span>
           </h2>
 
           <div className="font-label text-xs sm:text-sm uppercase tracking-[0.35em] text-champagne/90 font-semibold">
@@ -94,7 +98,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* THREE DIRECT CTA BUTTONS */}
+        {/* DIRECT CTA BUTTONS */}
         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 pt-4">
           <div className="footer-cta-btn">
             <MagneticButton href={businessInfo.googleMapsUrl} target="_blank" variant="primary" cursorLabel="Maps">
@@ -111,14 +115,6 @@ export default function Footer() {
               </span>
             </MagneticButton>
           </div>
-
-          <div className="footer-cta-btn">
-            <MagneticButton href="https://wa.me/" target="_blank" variant="outline" cursorLabel="Chat">
-              <span className="flex items-center gap-2">
-                <MessageSquare className="h-4 w-4 text-gold" /> WHATSAPP
-              </span>
-            </MagneticButton>
-          </div>
         </div>
 
         {/* LOGO & NAVIGATION LINKS */}
@@ -126,7 +122,7 @@ export default function Footer() {
 
           {/* Logo & Info */}
           <div className="flex items-center gap-3">
-            <div className="relative h-12 w-12 rounded-full border border-gold/60 p-0.5 bg-wine/40">
+            <div className="relative h-12 w-12 rounded-full p-0.5 bg-wine/40">
               <Image
                 src="/priya-logo.png"
                 alt="Priya Logo"
@@ -161,9 +157,7 @@ export default function Footer() {
 
         {/* FOOTER BOTTOM LEGAL & CREDITS */}
         <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-silver/60 gap-4">
-          <div>
-            © 1985–2026 Priya Ice Creams Fastfood North Indian, Proddatur. All rights reserved.
-          </div>
+
           <div className="flex items-center gap-1">
             Made with <Heart className="h-3.5 w-3.5 fill-wine text-wine inline mx-0.5" /> for Proddatur.
           </div>

@@ -100,7 +100,7 @@ export default function SignatureDishes() {
             trigger: sectionRef.current,
             start: "top 80%",
             end: "bottom 20%",
-            toggleActions: isMobile ? "play none none none" : "play reverse play reverse"
+            toggleActions: "restart pause resume reverse"
           }
         }
       );
