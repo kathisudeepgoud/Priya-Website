@@ -78,7 +78,7 @@ export default function Gallery() {
                   }`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 transition-opacity group-hover:opacity-95" />
-              <div className="absolute bottom-3 left-3 right-3 font-label text-[0.65rem] uppercase tracking-widest text-champagne font-semibold opacity-90 group-hover:text-gold transition-colors">
+              <div className="absolute bottom-3 left-3 right-3 font-label text-[0.65rem] uppercase tracking-widest text-champagne img-text-category font-semibold opacity-90 group-hover:text-gold transition-colors">
                 {item.label}
               </div>
             </div>

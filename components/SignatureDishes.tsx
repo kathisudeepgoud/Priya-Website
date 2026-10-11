@@ -149,7 +149,7 @@ export default function SignatureDishes() {
                 key={dish.id}
                 onMouseMove={(e) => handleMouseMoveCard(dish.id, e)}
                 onMouseLeave={() => handleMouseLeaveCard(dish.id)}
-                className="sig-card group relative rounded-3xl border border-gold/30 bg-card-surface p-4 sm:p-5 transition-all duration-500 ease-out shadow-[0_15px_40px_rgba(0,0,0,0.5)] hover:border-gold hover:shadow-[0_25px_60px_rgba(229,185,92,0.25)] flex flex-col justify-between"
+                className="sig-card group relative rounded-3xl border border-gold/30 theme-bg-card p-4 sm:p-5 transition-all duration-500 ease-out shadow-[0_15px_35px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_40px_rgba(0,0,0,0.5)] hover:border-gold hover:shadow-[0_20px_45px_rgba(229,185,92,0.25)] flex flex-col justify-between overflow-hidden"
                 style={{
                   perspective: "1000px",
                   transformStyle: "preserve-3d",
@@ -171,10 +171,10 @@ export default function SignatureDishes() {
 
                   {/* Bottom Image Overlay Category & Title */}
                   <div className="absolute bottom-4 left-4 right-4">
-                    <span className="font-label text-[0.65rem] uppercase tracking-widest text-champagne/90 block font-semibold">
+                    <span className="font-label text-[0.65rem] uppercase tracking-widest text-champagne/90 img-text-category block font-semibold">
                       {dish.category}
                     </span>
-                    <h3 className="font-display text-2xl text-cream drop-shadow-md group-hover:text-gold transition-colors">
+                    <h3 className="font-display text-2xl text-cream img-text-title drop-shadow-md group-hover:text-gold transition-colors">
                       {dish.name}
                     </h3>
                   </div>

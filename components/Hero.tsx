@@ -156,7 +156,7 @@ export default function Hero() {
             </p>
 
             {/* ACTIVE DISH HIGHLIGHT CARD */}
-            <div className="hero-fade-item rounded-2xl border border-gold/30 bg-[#160E11]/90 p-4 sm:p-5 backdrop-blur-xl shadow-2xl w-full max-w-lg">
+            <div className="hero-fade-item rounded-2xl border border-gold/30 theme-bg-card p-4 sm:p-5 backdrop-blur-xl shadow-2xl w-full max-w-lg">
               <div ref={textContainerRef} className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-champagne/40 bg-wine/40 px-3 py-1 font-label text-[0.65rem] uppercase tracking-wider text-champagne font-semibold">
@@ -173,7 +173,7 @@ export default function Hero() {
                   {displayedItem.description}
                 </p>
 
-                <div className="font-label text-[0.65rem] uppercase tracking-widest text-champagne/90 pt-2 border-t border-white/10 flex items-center justify-between">
+                <div className="font-label text-[0.65rem] uppercase tracking-widest text-champagne/90 pt-2 border-t border-gold/20 flex items-center justify-between">
                   <span>★ {displayedItem.tag}</span>
                   <span className="text-silver/50">ITEM 0{activeIndex + 1} OF 0{HERO_ITEMS.length}</span>
                 </div>

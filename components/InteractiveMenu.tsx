@@ -161,9 +161,9 @@ export default function InteractiveMenu() {
       </div>
 
       {/* ========================================================================= */}
-      {/* PERMANENT STICKY CATEGORY NAVBAR (PINNED AT TOP-[64PX]/[76PX] BELOW TOP NAV BAR) */}
+      {/* PERMANENT STICKY CATEGORY NAVBAR (PINNED AT TOP-[64PX] BELOW TOP NAV BAR WITHOUT GAP) */}
       {/* ========================================================================= */}
-      <div className="sticky top-[64px] sm:top-[76px] z-[400] w-full py-3 bg-[#140D10]/98 backdrop-blur-2xl border-y border-gold/30 shadow-[0_12px_30px_rgba(0,0,0,0.8)] mb-12 transition-all">
+      <div className="sticky top-[64px] z-[400] w-full py-3 theme-bg-alt backdrop-blur-2xl border-y border-gold/30 shadow-[0_10px_25px_rgba(0,0,0,0.15)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.8)] mb-12 transition-all">
         <div className="relative flex items-center max-w-[1400px] mx-auto px-[4vw] sm:px-[5vw]">
           
           {/* Scroll Left Button */}
@@ -251,7 +251,7 @@ export default function InteractiveMenu() {
                 {cat.items.map((item, idx) => (
                   <div
                     key={`${item.name}-${idx}`}
-                    className="group flex items-center justify-between rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 transition-all duration-300 hover:border-gold/60 hover:bg-wine/30 shadow-md"
+                    className="group flex items-center justify-between rounded-xl border border-gold/25 theme-bg-card px-4 py-3.5 transition-all duration-300 hover:border-gold hover:shadow-md shadow-sm"
                   >
                     <div className="flex items-center gap-2.5 pr-2 min-w-0 flex-1">
                       {/* Veg / Egg Badge Indicator */}

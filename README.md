@@ -30,13 +30,3 @@ npm run dev
 ```
 
 Then open http://localhost:3000.
-
-## Notes / things to finish before launch
-
-- `tel:+91` and `https://wa.me/` in `components/Location.tsx` and `Footer.tsx` are placeholders —
-  no phone number was in the source material, so add the real number before publishing.
-- Food photography in the hero rail, category panels, and gallery currently uses stock Unsplash
-  images as placeholders for dishes not photographed yet — swap in real Priya photos when available.
-- This project was generated as source code; it hasn't been run through `npm install` /
-  a bundler in this environment, so do a first local build (`npm run build`) before deploying to
-  catch any dependency-version edge cases.

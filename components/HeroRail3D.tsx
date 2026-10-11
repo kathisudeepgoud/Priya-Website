@@ -262,13 +262,13 @@ export default function HeroRail3D({
 
                   {/* Card Bottom Details */}
                   <div className="absolute bottom-3 left-3 right-3 z-20 text-left space-y-0.5">
-                    <span className="font-label text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] text-champagne font-bold block">
+                    <span className="font-label text-[0.6rem] sm:text-[0.65rem] uppercase tracking-[0.2em] text-champagne img-text-category font-bold block">
                       {item.category}
                     </span>
-                    <h3 className="font-display text-lg sm:text-xl text-cream drop-shadow-md leading-tight">
+                    <h3 className="font-display text-lg sm:text-xl text-cream img-text-title drop-shadow-md leading-tight">
                       {item.title}
                     </h3>
-                    <p className="font-label text-[0.6rem] sm:text-[0.65rem] text-silver/90 font-medium truncate">
+                    <p className="font-label text-[0.6rem] sm:text-[0.65rem] text-silver/90 img-text-sub font-medium truncate">
                       {item.tag}
                     </p>
                   </div>

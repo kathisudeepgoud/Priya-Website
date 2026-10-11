@@ -212,6 +212,38 @@ body {
   color: var(--text-accent);
 }
 
+/* Image overlay text rules (Ensures text on dark images is always bright, crisp, and high-contrast in Vanilla Cream theme) */
+.img-text-title {
+  color: #FFFDF8;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.img-text-category {
+  color: #F5C86B;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.img-text-sub {
+  color: #E2D7C5;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="vanilla"] .img-text-title {
+  color: #FFFDF8 !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9) !important;
+}
+
+[data-theme="vanilla"] .img-text-category {
+  color: #F5C86B !important;
+  text-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+[data-theme="vanilla"] .img-text-sub {
+  color: #E2D7C5 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9) !important;
+}
+
+
 @media (max-width: 900px) {
   .cursor-dot {
     display: none !important;
